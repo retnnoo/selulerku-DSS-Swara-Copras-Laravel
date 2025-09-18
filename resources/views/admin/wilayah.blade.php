@@ -3,9 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Data Alternatif</title>
-  <!--select-->
-  <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+  <title>Wilayah</title>
   <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
   <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     @vite('resources/css/app.css')
@@ -22,24 +20,10 @@
 
       <!-- Main -->
       <main class="max-w-[1200px] mx-auto px-4 lg:px-8 py-6 space-y-6">
-        <h1 class="text-3xl font-bold text-(--warna1)">Daftar Alternatif</h1>
+        <h1 class="text-3xl font-bold text-(--warna1)">Daftar Wilayah</h1>
         <p class="text-slate-500 mb-5">
-          Daftar Alternatif keputusan.
+          Daftar Wilayah.
         </p>
-
-            <!-- Bagian Pilih Wilayah -->
-            <div class="max-w-md flex-col justify-start">
-                <p class="text-gray-500 text-base md:text-lg font-medium mb-4">Pilih wilayah</p>
-                <form action="{{ route('alternatif') }}" method="GET" id="formWilayah">
-                <select id="wilayah" name="wilayah"  onchange="document.getElementById('formWilayah').submit()"
-                    class="select2 w-full rounded-lg border border-gray-300 p-3 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    @foreach ($wilayah as $items )
-                       <option value="{{$items->kode_wilayah}}"  {{ request('wilayah') == $items->kode_wilayah ? 'selected' : '' }}>{{$items->nama_wilayah}}</option>
-                    @endforeach
-                </select>
-                    </form>
-            </div>
-
           @if (session()->has('success'))
                         <div class="alert alert-success alert-dismissible fade show mt-4" role="alert">
                             {{ session('success') }}
@@ -50,11 +34,11 @@
 
         <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-lg">
           <div class="flex justify-between items-center mb-4">
-            <h2 class="text-2xl font-semibold text-(--warna1)">Tabel Alternatif</h2>
+            <h2 class="text-2xl font-semibold text-(--warna1)">Tabel Wilayah</h2>
             <button 
               onclick="openModal('modalTambah')"  
               class="bg-gradient-to-r from-blue-400 to-(--warna1) hover:from-blue-400 hover:to-blue-400 text-white font-medium px-4 py-2 rounded-lg shadow transition">
-              Tambah Alternatif
+              Tambah Wilayah
             </button>
           </div>
 
@@ -63,40 +47,31 @@
             <table id="kriteriaTable" class="display w-full text-sm text-slate-700">
               <thead class="bg-gradient-to-r from-blue-400 to-(--warna1)">
                 <tr>
-                  <th class="px-4 py-3 text-center">Kode Alternatif</th>
-                  <th class="px-4 py-3 text-center">Alternatif</th>
-                @foreach ($kriteria as $k )
-                     <th class="px-4 py-3 text-center">{{ $k->nama_kriteria }}</th>
-                @endforeach
+                  <th class="px-4 py-3 text-center">No</th>
+                  <th class="px-4 py-3 text-center">Kode Wilayah</th>
+                  <th class="px-4 py-3 text-left">Nama Wilayah</th>
                   <th class="px-4 py-3 text-center">Aksi</th>
                 </tr>
               </thead>
               <tbody>
-               @foreach ($alternatif as $a)
-                 <tr>
-                    <td class="text-center font-medium">{{ $a->kode_alternatif }}</td>
-                    <td class="text-center font-medium">{{ $a->nama_alternatif }}</td>
-                  @foreach ($kriteria as $k)
-                      @php
-                          $nilai = $a->nilaiAlternatif->firstWhere('kode_kriteria', $k->kode_kriteria);
-                      @endphp
-                      <td class="text-center">
-                          {{ $nilai ? $nilai->nilai : '-' }}
-                      </td>
-                  @endforeach
-    
+                @foreach ( $wilayah as $items )
+                  <tr>
+                    <td class="text-center">{{ $loop->iteration }}</td>
+                    <td class="text-center font-medium">{{ $items->kode_wilayah }}</td>
+                    <td>{{ $items->nama_wilayah }}</td>
                     <td class="text-center">
-                  <button 
-  onclick="openModalEdit('{{ $a->kode_alternatif }}', {{ $a->nilaiAlternatif->pluck('nilai', 'kode_kriteria') }}, '{{ $a->nama_alternatif }}')"
-  class="px-3 py-1 text-xs font-medium bg-blue-100 text-blue-600 rounded-lg hover:bg-blue-200 transition">
-  Edit
-</button>
-
-                      <button class="px-3 py-1 text-xs font-medium bg-red-100 text-red-600 rounded-lg hover:bg-red-200 transition">Hapus</button>
+                      <button onclick="openModal('modalEdit', this)"
+                           data-id="{{ $items->kode_wilayah }}"
+                           data-nama="{{ $items->nama_wilayah }}"
+                      class="px-3 py-1 text-xs font-medium bg-blue-100 text-blue-600 rounded-lg hover:bg-blue-200 transition">Edit</button>
+                      <form action="{{ route('delete.wilayah', $items->kode_wilayah) }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button class="px-3 py-1 text-xs font-medium bg-red-100 text-red-600 rounded-lg hover:bg-red-200 transition">Hapus</button>
+                      </form>
                     </td>
                   </tr>
-               @endforeach
-                  
+                @endforeach
               </tbody>
             </table>
           </div>
@@ -108,14 +83,11 @@
   <!--Modal Tambah--->
   <div id="modalTambah" class="hidden fixed inset-0 bg-black/50 items-center justify-center z-50">
   <div class="bg-white rounded-lg p-6 w-full max-w-md">
-    <h3 class="text-lg font-semibold mb-4">Tambah Alternatif</h3>
-    <form action="{{ route ('store.alternatif') }}" method="POST">
+    <h3 class="text-lg font-semibold mb-4">Tambah Wilayah</h3>
+    <form action="{{ route('store.wilayah') }}" method="POST">
       @csrf
-      <input type="text" placeholder="Nama Alternatif" name="nama_alternatif" class="w-full border px-3 py-2 rounded mb-3">
-        @foreach ( $kriteria as $k )
-              <input type="text" placeholder="Nilai {{ $k->nama_kriteria }}" name="nilai[{{ $k->kode_kriteria }}]" class="w-full border px-3 py-2 rounded mb-3">    
-        @endforeach
-        <input type="hidden" name="kode_wilayah" value="{{ request('wilayah') }}">
+      <input type="text" placeholder="Kode Wilayah" name="kode_wilayah" class="w-full border px-3 py-2 rounded mb-3">
+      <input type="text" placeholder="Nama wilayah" name="nama_wilayah" class="w-full border px-3 py-2 rounded mb-3">
       <div class="flex justify-end gap-2">
         <button type="button" onclick="closeModal('modalTambah')" 
                 class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300">Batal</button>
@@ -128,13 +100,10 @@
 <!-- Modal Edit -->
 <div id="modalEdit" class="hidden fixed inset-0 bg-black/50 items-center justify-center z-50">
   <div class="bg-white rounded-lg p-6 w-full max-w-md">
-    <h3 class="text-lg font-semibold mb-4">Edit Alternatif</h3>
+    <h3 class="text-lg font-semibold mb-4">Edit Wilayah</h3>
     <form method="POST">
       @csrf
-     <input type="text" name="nama_alternatif" id="inputNamaAlternatif" class="w-full border px-3 py-2 rounded mb-3">
-       @foreach ( $kriteria as $k )
-              <input type="text" placeholder="Nilai {{ $k->nama_kriteria }}" name="nilai[{{ $k->kode_kriteria }}]" value="" class="w-full border px-3 py-2 rounded mb-3">    
-        @endforeach
+      <input type="text" id="edit_nama" name="nama_wilayah" class="w-full border px-3 py-2 rounded mb-3">
       <div class="flex justify-end gap-2">
         <button type="button" onclick="closeModal('modalEdit')" 
                 class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300">Batal</button>
@@ -148,24 +117,16 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <!-- DataTables JS -->
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
 
 
 <script>
-    $(document).ready(function() {
-        $('#wilayah').select2({
-            placeholder: "Pilih Wilayah",
-            width: '100%',
-        });     
-    });
-    
     $(document).ready(function () {
       $('#kriteriaTable').DataTable({
         paging: true,
         searching: true,
         ordering: true,
         info: true,
-        lengthMenu: [5, 10, 20],
+        lengthMenu: [10, 20],
         language: {
           lengthMenu: "Tampilkan _MENU_ entri",
           search: "Cari:",
@@ -207,33 +168,21 @@
     }
   });
 
-  function openModal(id) {
+  function openModal(id, button=null) {
     const modal = document.getElementById(id);
-    modal.classList.add("flex");
-    modal.classList.remove("hidden");
-  }
-
-  function openModalEdit(kodeAlternatif, nilaiData, namaAlternatif) {
-    const modal = document.getElementById('modalEdit');
     modal.classList.remove("hidden");
     modal.classList.add("flex");
 
-    modal.querySelectorAll('input').forEach(input => {
-        input.value = '';
-    });
+    if (button) {
+      // Ambil data dari tombol
+      const id = button.getAttribute('data-id');
+      const nama = button.getAttribute('data-nama');
 
-    
-     // Isi nama alternatif
-    document.getElementById('inputNamaAlternatif').value = namaAlternatif;
+      // Isi ke input modal
+      document.getElementById('edit_nama').value = nama;
 
-    // Isi nilai tiap kriteria
-    for (const kodeKriteria in nilaiData) {
-        const input = modal.querySelector(`input[name="nilai[${kodeKriteria}]"]`);
-        if (input) {
-            input.value = nilaiData[kodeKriteria];
-        }
+      document.querySelector('#modalEdit form').action = "{{ url('/dashboard-admin/wilayah/update-data') }}/" + id;
     }
-
   }
 
   function closeModal(id) {

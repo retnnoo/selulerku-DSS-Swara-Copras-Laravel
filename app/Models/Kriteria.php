@@ -27,4 +27,9 @@ class Kriteria extends Model
         return $this->hasMany(NilaiAhli::class, 'kode_kriteria', 'kode_kriteria');
     }
 
+    public function nilaiAlternatif()
+    {
+        return $this->hasMany(NilaiAlternatif::class, 'kode_kriteria', 'kode_kriteria');
+    }
+
 }

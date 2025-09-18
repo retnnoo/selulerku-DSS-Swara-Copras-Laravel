@@ -3,13 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\Ahli;
+use App\Models\Alternatif;
 use App\Models\Bobot;
 use App\Models\Kriteria;
 use App\Models\NilaiAhli;
 use App\Models\User;
+use App\Models\Wilayah;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-   use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Log;
 
 class AdminController extends Controller
 {
@@ -67,8 +69,23 @@ class AdminController extends Controller
         return redirect()->route('kriteria')->with('success', 'Data berhasil diedit!');
     }
 
+     public function deleteKriteria($kode_kriteria)
+    {
+        try {
+            $deleted = Kriteria::where('kode_kriteria', $kode_kriteria)->delete();
+
+            return redirect()->route('kriteria')->with('success', 'Data berhasil dihapus!');
+            // if (!$deleted) {
+            //     return response()->json(['message' => 'Data tidak ditemukan'], 404);
+            // }
+            // return response()->json(['message' => 'Data berhasil dihapus']);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Gagal menghapus data: ' . $e->getMessage()], 500);
+        }
+    }
+
     public function indexAhli(){
-        $ahli = Ahli::with('nilai.kriteria')->get();
+        $ahli =  Ahli::orderByRaw('CAST(SUBSTRING(kode_ahli, 2) AS UNSIGNED) ASC')->get();
         $kriteria = Kriteria::all();
 
         return view('admin.data_ahli', compact('ahli', 'kriteria'));
@@ -80,7 +97,8 @@ class AdminController extends Controller
         ]);
 
         // Ambil kode terakhir
-        $last = Ahli::orderBy('kode_ahli', 'desc')->first();
+       $last = Ahli::orderByRaw('CAST(SUBSTRING(kode_ahli, 2) AS UNSIGNED) DESC')->first();
+
 
         if ($last) {
             // Ambil angka setelah huruf P
@@ -105,6 +123,38 @@ class AdminController extends Controller
 
         return redirect()->route('ahli')->with('success', 'Data ahli berhasil ditambahkan!');
     }
+
+    public function updateAhli(Request $request, $kode_ahli){
+        // dd($kode_ahli); 
+         $data = $request->validate([
+            'nilai' => 'required|array',
+        ]);
+
+
+        // Cari data ahli berdasarkan id
+        $ahli = Ahli::findOrFail($kode_ahli);
+
+        foreach ($request->nilai as $kode_kriteria => $val) {
+            DB::table('nilai_ahli')->updateOrInsert(
+                [
+                    'kode_ahli' => $ahli->kode_ahli,
+                    'kode_kriteria' => $kode_kriteria,
+                ],
+                ['nilai' => $val]
+            );
+        }
+
+        return redirect()->route('ahli')->with('success', 'Data berhasil diperbarui!');
+    }
+    
+    public function deleteAhli($kode_ahli){
+        $ahli = Ahli::findOrFail($kode_ahli);
+        $ahli->delete();
+
+        return redirect()->route('ahli')->with('success', 'Data ahli berhasil dihapus!'); 
+    }
+
+
 
     public function indexPembobotanSwara(){
         // 1. Ambil semua data
@@ -182,11 +232,103 @@ class AdminController extends Controller
         return view('admin.pembobotan_swara', compact('data'));
     }
 
-    public function indexAlternatif(){
-        return view('admin.data_alternatif');
+    // ALTERNATIF
+    public function indexAlternatif(Request $request){
+        $wilayah = Wilayah::all();
+    $defaultWilayah = Wilayah::first()->kode_wilayah ?? null;
+       $alternatif = Alternatif::with(['nilaiAlternatif' => function($query) use ($request, $defaultWilayah) {
+        if ($request->has('wilayah') && $request->wilayah != '') {
+            $query->where('kode_wilayah', $request->wilayah);
+        }else{
+            $query->where('kode_wilayah', $defaultWilayah);
+        }
+    }])
+    ->orderByRaw('CAST(SUBSTRING(kode_alternatif, 2) AS UNSIGNED) ASC')
+    ->get();
+        $kriteria = Kriteria::all();
+        return view('admin.data_alternatif', compact('wilayah', 'alternatif', 'kriteria'));
+    }
+
+    public function storeAlternatif(Request $request){
+       $request->validate([
+            'nama_alternatif' => 'string',
+            'nilai' => 'required|array',
+            'kode_wilayah' => 'string'
+        ]);
+
+        // Ambil kode terakhir
+       $last = Alternatif::orderByRaw('CAST(SUBSTRING(kode_alternatif, 2) AS UNSIGNED) DESC')->first();
+       
+
+
+        if ($last) {
+            $num = (int) substr($last->kode_alternatif, 1);
+            $newKode = 'A' . ($num + 1);
+        } else {
+            $newKode = 'A1';
+        }
+
+        $alternatif = Alternatif::create([
+            'kode_alternatif' => $newKode,
+            'nama_alternatif' => $request->nama_alternatif
+
+        ]);
+
+        foreach ($request->nilai as $kode_kriteria => $val) {
+            DB::table('nilai_alternatif')->insert([
+                'kode_alternatif' => $alternatif->kode_alternatif,
+                'kode_kriteria' => $kode_kriteria,
+                'kode_wilayah' => $request->kode_wilayah,
+                'nilai' => $val,
+            ]);
+        }
+
+        return redirect()->route('alternatif')->with('success', 'Data ahli berhasil ditambahkan!');
     }
 
     public function indexCopras(){
         return view('admin.copras');
+    }
+
+
+    public function indexwilayah(){
+        $wilayah = Wilayah::all();
+        return view('admin.wilayah', compact('wilayah'));
+    }
+
+    public function storewilayah(Request $request){
+        $data = $request->validate([
+            'kode_wilayah' => 'required|max:5|string',
+            'nama_wilayah' => 'required|max:20|string',
+        ]);
+
+        Wilayah::create($data);
+        return redirect()->route('wilayah')->with('success', 'Data berhasil disimpan!');
+    }
+
+    public function updatewilayah(Request $request, $kode_wilayah){
+        $data = $request->validate([
+            'nama_wilayah' => 'required|max:20|string',
+        ]);
+
+       $wilayah = Wilayah::findOrFail($kode_wilayah);
+       $wilayah->update($data);
+
+        return redirect()->route('wilayah')->with('success', 'Data berhasil diedit!');
+    }
+
+     public function deletewilayah($kode_wilayah)
+    {
+        try {
+            $deleted = Wilayah::where('kode_wilayah', $kode_wilayah)->delete();
+
+            return redirect()->route('wilayah')->with('success', 'Data berhasil dihapus!');
+            // if (!$deleted) {
+            //     return response()->json(['message' => 'Data tidak ditemukan'], 404);
+            // }
+            // return response()->json(['message' => 'Data berhasil dihapus']);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Gagal menghapus data: ' . $e->getMessage()], 500);
+        }
     }
 }

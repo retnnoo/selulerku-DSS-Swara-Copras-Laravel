@@ -40,6 +40,7 @@
             <table id="kriteriaTable" class="display w-full text-sm text-slate-700">
               <thead class="bg-gradient-to-r from-blue-400 to-(--warna1)">
                 <tr>
+                    <th class="px-4 py-3 text-center">No</th>
                     <th class="px-4 py-3 text-center">Kode Ahli</th>
                         @foreach ($kriteria as $k)
                             <th class="px-4 py-3 text-center">{{ $k->nama_kriteria }}</th>
@@ -50,6 +51,7 @@
               <tbody>
                 @foreach ($ahli as $a)
             <tr>
+                <td>{{ $loop->iteration }}</td>
                 <td>{{ $a->kode_ahli }}</td>
                 @foreach ($kriteria as $k)
                     @php
@@ -59,9 +61,15 @@
                         {{ $nilai ? $nilai->nilai : '-' }}
                     </td>
                 @endforeach
-                    <td class="text-center">
-                    <button class="px-3 py-1 text-xs font-medium bg-blue-100 text-blue-600 rounded-lg hover:bg-blue-200 transition">Edit</button>
-                    <button class="px-3 py-1 text-xs font-medium bg-red-100 text-red-600 rounded-lg hover:bg-red-200 transition">Hapus</button>
+                    <td  
+                    class="text-center">
+                    <button onclick="openModalEdit('{{ $a->kode_ahli }}', {{ $a->nilai->pluck('nilai', 'kode_kriteria') }})" class="px-3 py-1 text-xs font-medium bg-blue-100 text-blue-600 rounded-lg hover:bg-blue-200 transition">Edit</button>
+                    <form action="{{ route('delete.ahli', $a->kode_ahli) }}" method="POST">
+                      @csrf
+                      @method('DELETE')
+                      <button class="px-3 py-1 text-xs font-medium bg-red-100 text-red-600 rounded-lg hover:bg-red-200 transition">Hapus</button>
+                    </form>
+                    
                   </td>
             </tr>
         @endforeach
@@ -95,15 +103,11 @@
 <div id="modalEdit" class="hidden fixed inset-0 bg-black/50 items-center justify-center z-50">
   <div class="bg-white rounded-lg p-6 w-full max-w-md">
     <h3 class="text-lg font-semibold mb-4">Edit Kriteria</h3>
-    <form>
-      <input type="text" value="C1" class="w-full border px-3 py-2 rounded mb-3">
-      <input type="text" value="Kecepatan Sinyal" class="w-full border px-3 py-2 rounded mb-3">
-      <input type="text" value="C1" class="w-full border px-3 py-2 rounded mb-3">
-      <input type="text" value="Kecepatan Sinyal" class="w-full border px-3 py-2 rounded mb-3">
-      <input type="text" value="C1" class="w-full border px-3 py-2 rounded mb-3">
-      <input type="text" value="Kecepatan Sinyal" class="w-full border px-3 py-2 rounded mb-3">
-      <input type="text" value="C1" class="w-full border px-3 py-2 rounded mb-3">
-      <input type="text" value="Kecepatan Sinyal" class="w-full border px-3 py-2 rounded mb-3">
+    <form method="POST">
+      @csrf
+     @foreach ( $kriteria as $k )
+              <input type="text" placeholder="Nilai {{ $k->nama_kriteria }}" name="nilai[{{ $k->kode_kriteria }}]" value="" class="w-full border px-3 py-2 rounded mb-3">    
+        @endforeach
       <div class="flex justify-end gap-2">
         <button type="button" onclick="closeModal('modalEdit')" 
                 class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300">Batal</button>
@@ -168,11 +172,28 @@
     }
   });
 
-  function openModal(id) {
+   function openModal(id) {
     const modal = document.getElementById(id);
-    modal.classList.remove("hidden");
     modal.classList.add("flex");
+    modal.classList.remove("hidden");
   }
+
+
+  function openModalEdit(kodeAhli, nilaiData) {
+    const modal = document.getElementById('modalEdit');
+    modal.classList.remove('hidden');
+     modal.classList.add('flex');
+
+    for (const kodeKriteria in nilaiData) {
+        const input = modal.querySelector(`input[name="nilai[${kodeKriteria}]"]`);
+        if (input) {
+            input.value = nilaiData[kodeKriteria];
+        }
+    }
+    document.querySelector('#modalEdit form').action = "{{ url('/dashboard-admin/ahli/update-data') }}/" + kodeAhli;
+
+  }
+
 
   function closeModal(id) {
     const modal = document.getElementById(id);

@@ -72,7 +72,11 @@
                            data-nama="{{ $items->nama_kriteria }}"
                            data-jenis="{{ $items->jenis_kriteria }}" 
                       class="px-3 py-1 text-xs font-medium bg-blue-100 text-blue-600 rounded-lg hover:bg-blue-200 transition">Edit</button>
-                      <button class="px-3 py-1 text-xs font-medium bg-red-100 text-red-600 rounded-lg hover:bg-red-200 transition">Hapus</button>
+                      <form action="{{ route('delete.kriteria', $items->kode_kriteria) }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button class="px-3 py-1 text-xs font-medium bg-red-100 text-red-600 rounded-lg hover:bg-red-200 transition">Hapus</button>
+                      </form>
                     </td>
                   </tr>
                 @endforeach

@@ -22,5 +22,12 @@ class Ahli extends Model
         return $this->hasMany(NilaiAhli::class, 'kode_ahli', 'kode_ahli');
     }
 
+    protected static function booted()
+{
+    static::deleting(function ($ahli) {
+        $ahli->nilai()->delete();
+    });
+}
+
 }
 
