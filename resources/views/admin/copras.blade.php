@@ -28,17 +28,18 @@
 
         <!-- Bagian Pilih Wilayah -->
             <div class="max-w-md flex-col justify-start">
-                <p class="text-gray-500 text-base md:text-lg font-medium mb-4">Pilih wilayah</p>
-                <select id="wilayah" name="wilayah"
-                    class="select2 w-full rounded-lg border border-gray-300 p-3 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    <option value="">-- Pilih Wilayah --</option>
-                    <option value="wilayah2">Gang Buntu/Jalan Nusantara</option>
-                    <option value="wilayah3">Gang Lampung</option>
-                    <option value="wilayah4">Perumahan Griya Sejahtera</option>
-                    <option value="wilayah5">Timbangan</option>
-                    <option value="wilayah6">Sarjana</option>
-                </select>
-            </div>
+              <p class="text-gray-500 text-base md:text-lg font-medium mb-4">Pilih wilayah</p>
+              <form action="{{ route('copras') }}" method="GET" id="formWilayah">
+                  <select id="wilayah" name="wilayah" onchange="document.getElementById('formWilayah').submit()"
+                      class="select2 w-full rounded-lg border border-gray-300 p-3 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                      @foreach ($wilayah as $items)
+                          <option value="{{ $items->kode_wilayah }}" {{ request('wilayah') == $items->kode_wilayah ? 'selected' : '' }}>
+                              {{ $items->nama_wilayah }}
+                          </option>
+                      @endforeach
+                  </select>
+              </form>
+          </div>
 
           @if (session()->has('success'))
                         <div class="alert alert-success alert-dismissible fade show mt-4" role="alert">
@@ -59,16 +60,18 @@
               <thead class="bg-gradient-to-r from-blue-400 to-(--warna1)">
                 <tr>
                   <th class="px-4 py-3 text-center">Kode Alternatif</th>
+                  <th class="px-4 py-3 text-center">Nama Alternatif</th>
                   <th class="px-4 py-3 text-center">Skor COPRAS</th>
-                  <th class="px-4 py-3 text-left">Ranking</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                    <td class="text-center font-medium">A1</td>
-                    <td class="text-center font-medium">33</td>
-                    <td class="text-center font-medium">1</td>
-                </tr>
+                  @foreach ($copras as $row)
+                      <tr>
+                          <td class="text-center">{{ $row->kode_alternatif }}</td>
+                          <td class="text-center">{{ $row->alternatif->nama_alternatif ?? '-' }}</td>
+                          <td class="text-center">{{ number_format($row->nilai_copras, 2) }}</td>
+                      </tr>
+                  @endforeach
               </tbody>
             </table>
           </div>
@@ -98,7 +101,7 @@
         searching: true,
         ordering: true,
         info: true,
-        lengthMenu: [5, 10, 20],
+        lengthMenu: [10, 20],
         language: {
           lengthMenu: "Tampilkan _MENU_ entri",
           search: "Cari:",

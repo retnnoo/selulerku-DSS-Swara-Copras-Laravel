@@ -6,14 +6,17 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 
-Route::get('/login', [LoginController::class, 'index'])->name('login');
 Route::get('/', [UserController::class, 'index'])->name('beranda');
+Route::get('/login', [LoginController::class, 'index'])->name('login');
 Route::post('/login', [LoginController::class, 'authenticate'])->name('login.post');
 
-Route::get('/dashboard/admin/add', [AdminController::class, 'create']);
-Route::post('/dashboard/admin/add', [AdminController::class, 'storeAdmin'])->name('store.admin');
+Route::get('/dashboard-admin/admin', [AdminController::class, 'indexAdmin'])->name('admin');
+Route::post('/dashboard-admin/admin/add', [AdminController::class, 'storeAdmin'])->name('store.admin');
+Route::post('/dashboard-admin/admin/update-data/{id}', [AdminController::class, 'updateAdmin'])->name('update.admin');
+Route::delete('/dashboard-admin/admin/delete-data/{id}', [AdminController::class, 'deleteAdmin'])->name('delete.admin');
 
-Route::get('/dashboard-admin', [AdminController::class, 'index'])->name('dashboard');
+Route::get('/dashboard-login-admin', [AdminController::class, 'index'])->name('dashboard');
+
 Route::get('/dashboard-admin/kriteria', [AdminController::class, 'indexKriteria'])->name('kriteria');
 Route::post('/dashboard-admin/kriteria/add-data', [AdminController::class, 'storeKriteria'])->name('store.kriteria');
 Route::post('/dashboard-admin/kriteria/update-data/{kode_kriteria}', [AdminController::class, 'updateKriteria'])->name('update.kriteria');
@@ -28,6 +31,8 @@ Route::get('/dashboard-admin/pembobotan', [AdminController::class, 'indexPembobo
 
 Route::get('/dashboard-admin/alternatif', [AdminController::class, 'indexAlternatif'])->name('alternatif');
 Route::post('/dashboard-admin/alternatif/add-data', [AdminController::class, 'storeAlternatif'])->name('store.alternatif');
+Route::post('/dashboard-admin/alternatif/update-data/{kode_alternatif}', [AdminController::class, 'updateAlternatif'])->name('update.alternatif');
+Route::delete('/dashboard-admin/alternatif/delete-data/{kode_alternatif}', [AdminController::class, 'deleteAlternatif'])->name('delete.alternatif');
 
 Route::get('/dashboard-admin/ranking-copras', [AdminController::class, 'indexCopras'])->name('copras');
 

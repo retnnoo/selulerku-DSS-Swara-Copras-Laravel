@@ -24,7 +24,7 @@
 
       <a href="{{ route('login') }}" class="flex items-center rounded-lg text-(--warna1) hover:bg-blue-100 p-2 transition">
         <i class="fa-solid fa-right-to-bracket text-xl"></i>
-        <span class="hidden md:inline font-bold ml-2 text-base">Login</span>
+        <span class="hidden md:inline font-bold ml-2 text-base">Login Admin</span>
       </a>
 
     </div>
@@ -85,114 +85,114 @@
         <div class="max-w-md mx-auto">
           <label for="wilayah" class="sr-only">Pilih Wilayahmu</label>
           <select id="wilayah" name="wilayah"
-            class="select2 w-full rounded-lg border border-gray-300 p-3 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
-            <option value="">-- Pilih Wilayah --</option>
-            <option value="wilayah2">Gang Buntu/Jalan Nusantara</option>
-            <option value="wilayah3">Gang Lampung</option>
-            <option value="wilayah4">Perumahan Griya Sejahtera</option>
-            <option value="wilayah5">Timbangan</option>
-            <option value="wilayah6">Sarjana</option>
+            class="select2 w-full rounded-lg border border-gray-300 p-3 shadow-sm">
+            @foreach($wilayahList as $wil)
+              <option value="{{ $wil->nama_wilayah }}"
+                {{ $wil->nama_wilayah == $defaultWilayah ? 'selected' : '' }}>
+                {{ $wil->nama_wilayah }}
+              </option>
+            @endforeach
           </select>
         </div>
       </div>
 
+      <!-- Grid Hasil Rekomendasi + Grafik -->
       <div class="max-w-7xl mx-auto px-4 mb-20">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+
           <!-- Bagian Hasil Rekomendasi -->
-          <div class="text-center bg-white shadow-md rounded-2xl p-8 flex flex-col justify-center">
-            <h2 class="text-2xl font-bold text-gray-800 mb-6">
-              Rekomendasi Operator Terbaik di <span id="">Wilayah Kamu</span>
+          <div class="text-center bg-white shadow-md rounded-2xl p-8 flex flex-col items-center justify-center">
+            <h2 class="text-2xl font-bold mb-6">
+              Rekomendasi Operator Terbaik di 
+              <span id="wilayah-rekom" class="text-(--warna1)">{{ $defaultWilayah }}</span>
             </h2>
-            <div class="flex flex-col items-center space-y-4">
-              <img src="./img/telkomsel.png" alt="Operator-Terbaik" class="h-16">
-              <h3 class="text-3xl font-extrabold text-(--warna1)">Telkomsel</h3>
-              <p class="text-gray-600 max-w-md">
-                Pilihan tersebut dipilh berdasarkan 
-              </p>
-            </div>
+            <img id="operator-logo" src="./img/default.png" alt="Operator" class="h-16 mb-4">
+            <h3 id="operator-nama" class="text-3xl font-extrabold">-</h3>
+            <p class="mt-4 text-gray-600 text-base max-w-xl mx-auto">
+              {{ $best['name'] ?? '-' }} direkomendasikan karena memiliki skor COPRAS terbaik di wilayah ini, 
+              yang dihitung berdasarkan pertimbangan semua kriteria utama seperti.
+            </p>
           </div>
 
           <!-- Bagian Grafik Ranking -->
           <div class="bg-white shadow-md rounded-2xl p-8">
             <h2 class="text-2xl text-center font-bold text-gray-800 mb-2">
-              Ranking Operator di <span id="wilayah-ranking">Indralaya Utara</span>
+              Ranking Operator di <span id="wilayah-ranking">{{ $defaultWilayah }}</span>
             </h2>
             <p class="text-gray-600 mb-6 text-center">
               Lihat perbandingan semua operator dari yang paling unggul sampai yang masih perlu ditingkatkan
             </p>
-
-            <!-- Grafik -->
-            <div class="space-y-4 max-w-lg mx-auto">
-              <div class="flex items-center">
-                <span class="w-28 font-semibold text-blue-600">Telkomsel</span>
-                <div class="flex-1 bg-gray-200 h-6 rounded-lg ml-2">
-                  <div class="bg-blue-600 h-6 rounded-lg w-4/5"></div>
-                </div>
-                <span class="ml-2 text-gray-700 font-medium">80%</span>
-              </div>
-
-              <div class="flex items-center">
-                <span class="w-28 font-semibold text-gray-700">XL</span>
-                <div class="flex-1 bg-gray-200 h-6 rounded-lg ml-2">
-                  <div class="bg-gray-500 h-6 rounded-lg w-3/5"></div>
-                </div>
-                <span class="ml-2 text-gray-700 font-medium">60%</span>
-              </div>
-
-              <div class="flex items-center">
-                <span class="w-28 font-semibold text-gray-700">Indosat</span>
-                <div class="flex-1 bg-gray-200 h-6 rounded-lg ml-2">
-                  <div class="bg-gray-400 h-6 rounded-lg w-2/5"></div>
-                </div>
-                <span class="ml-2 text-gray-700 font-medium">40%</span>
-              </div>
-
-              <div class="flex items-center">
-                <span class="w-28 font-semibold text-blue-600">Telkomsel</span>
-                <div class="flex-1 bg-gray-200 h-6 rounded-lg ml-2">
-                  <div class="bg-blue-600 h-6 rounded-lg w-4/5"></div>
-                </div>
-                <span class="ml-2 text-gray-700 font-medium">80%</span>
-              </div>
-
-              <div class="flex items-center">
-                <span class="w-28 font-semibold text-gray-700">XL</span>
-                <div class="flex-1 bg-gray-200 h-6 rounded-lg ml-2">
-                  <div class="bg-gray-500 h-6 rounded-lg w-3/5"></div>
-                </div>
-                <span class="ml-2 text-gray-700 font-medium">60%</span>
-              </div>
-
-              <div class="flex items-center">
-                <span class="w-28 font-semibold text-gray-700">Indosat</span>
-                <div class="flex-1 bg-gray-200 h-6 rounded-lg ml-2">
-                  <div class="bg-gray-400 h-6 rounded-lg w-2/5"></div>
-                </div>
-                <span class="ml-2 text-gray-700 font-medium">40%</span>
-              </div>
+            <div class="h-[250px]">
+              <canvas id="chartRanking"></canvas>
             </div>
           </div>
+
         </div>
       </div>
+
     </div>
-  </section>
+</section>
 
 
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+  <script>
+    const rankingData = @json($rankingPerWilayah);
+    let chartInstance = null;
 
+    function renderWilayah(wilayah) {
+      const ranking = rankingData[wilayah] || [];
+      if (!ranking.length) return;
 
-  <!--select-->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $('#wilayah').select2({
-                placeholder: "Pilih Wilayah",
-                width: '100%',
-            });
+      // Update teks wilayah
+      document.getElementById('wilayah-rekom').textContent = wilayah;
+      document.getElementById('wilayah-ranking').textContent = wilayah;
+
+      // Operator terbaik (skor tertinggi)
+      const best = [...ranking].sort((a, b) => b.score - a.score)[0];
+      if (best) {
+        const logo = document.getElementById('operator-logo');
+        document.getElementById('operator-nama').textContent = best.name;
+        logo.src = `/img/${best.name.toLowerCase()}.png`;
+        logo.alt = best.name;
+      }
+
+      const ctx = document.getElementById('chartRanking').getContext('2d');
+      if (chartInstance) chartInstance.destroy();
+
+      chartInstance = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: ranking.map(r => r.name),
+          datasets: [{
+            label: 'Skor',
+            data: ranking.map(r => r.score),
+            backgroundColor: 'rgba(43, 135, 255, 0.5)',
+            borderColor: '#2b87ff',
+            borderWidth: 1
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: { beginAtZero: true }
+          }
+        }
+      });
+    }
+
+    $(document).ready(function() {
+        $('.select2').select2();
+        renderWilayah("{{ $defaultWilayah }}");
+
+        $('#wilayah').on('change', function() {
+            renderWilayah(this.value);
         });
-    </script>
+    });
+  </script>
+
 
 </body>
-
-
 </html>

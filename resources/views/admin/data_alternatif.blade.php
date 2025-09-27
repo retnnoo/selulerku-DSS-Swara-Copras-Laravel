@@ -84,15 +84,18 @@
                           {{ $nilai ? $nilai->nilai : '-' }}
                       </td>
                   @endforeach
-    
                     <td class="text-center">
                   <button 
-  onclick="openModalEdit('{{ $a->kode_alternatif }}', {{ $a->nilaiAlternatif->pluck('nilai', 'kode_kriteria') }}, '{{ $a->nama_alternatif }}')"
-  class="px-3 py-1 text-xs font-medium bg-blue-100 text-blue-600 rounded-lg hover:bg-blue-200 transition">
-  Edit
-</button>
-
-                      <button class="px-3 py-1 text-xs font-medium bg-red-100 text-red-600 rounded-lg hover:bg-red-200 transition">Hapus</button>
+                    onclick="openModalEdit('{{ $a->kode_alternatif }}', {{ $a->nilaiAlternatif->pluck('nilai', 'kode_kriteria') }}, '{{ $a->nama_alternatif }}')"
+                    class="px-3 py-1 text-xs font-medium bg-blue-100 text-blue-600 rounded-lg hover:bg-blue-200 transition">
+                    Edit
+                  </button>
+                      <form id="delete-form-{{ $a->kode_alternatif }}" action="{{route('delete.alternatif', $a->kode_alternatif)}}" method="POST">
+                        @method('DELETE')
+                        @csrf
+                        <button type="button" onclick="konfirmasiHapus('delete-form-{{ $a->kode_alternatif }}')"
+                        class="px-3 py-1 text-xs font-medium bg-red-100 text-red-600 rounded-lg hover:bg-red-200 transition">Hapus</button>
+                      </form>
                     </td>
                   </tr>
                @endforeach
@@ -131,10 +134,11 @@
     <h3 class="text-lg font-semibold mb-4">Edit Alternatif</h3>
     <form method="POST">
       @csrf
-     <input type="text" name="nama_alternatif" id="inputNamaAlternatif" class="w-full border px-3 py-2 rounded mb-3">
+     <input type="text" name="nama_alternatif" id="inputNamaAlternatif" class="w-full border px-3 py-2 rounded mb-3 input-edit">
        @foreach ( $kriteria as $k )
-              <input type="text" placeholder="Nilai {{ $k->nama_kriteria }}" name="nilai[{{ $k->kode_kriteria }}]" value="" class="w-full border px-3 py-2 rounded mb-3">    
+              <input type="text" placeholder="Nilai {{ $k->nama_kriteria }}" name="nilai[{{ $k->kode_kriteria }}]" value="" class="w-full border px-3 py-2 rounded mb-3 input-edit">    
         @endforeach
+         <input type="hidden" name="kode_wilayah" value="{{ request('wilayah') }}">
       <div class="flex justify-end gap-2">
         <button type="button" onclick="closeModal('modalEdit')" 
                 class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300">Batal</button>
@@ -146,9 +150,26 @@
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <!-- DataTables JS -->
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+
+<script>
+    // Flash success dari session
+    window.flashSuccess = @json(session('success'));
+
+    // Flash error dari session atau validasi
+    @if ($errors->any())
+        let messages = "";
+        @foreach ($errors->all() as $error)
+            messages += "{{ $error }}\n";
+        @endforeach
+        window.flashError = messages;
+    @else
+        window.flashError = @json(session('error'));
+    @endif
+</script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="{{ asset('/js/script.js') }}"></script>
 
 
 <script>
@@ -165,7 +186,7 @@
         searching: true,
         ordering: true,
         info: true,
-        lengthMenu: [5, 10, 20],
+        lengthMenu: [10, 20],
         language: {
           lengthMenu: "Tampilkan _MENU_ entri",
           search: "Cari:",
@@ -218,7 +239,7 @@
     modal.classList.remove("hidden");
     modal.classList.add("flex");
 
-    modal.querySelectorAll('input').forEach(input => {
+    modal.querySelectorAll('.input-edit').forEach(input => {
         input.value = '';
     });
 
@@ -233,6 +254,7 @@
             input.value = nilaiData[kodeKriteria];
         }
     }
+    document.querySelector('#modalEdit form').action = "{{ url('/dashboard-admin/alternatif/update-data') }}/" + kodeAlternatif;
 
   }
 

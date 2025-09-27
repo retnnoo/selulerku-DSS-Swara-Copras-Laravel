@@ -43,9 +43,9 @@
               <tbody>
                 @foreach ($data as $d )
                 <tr>
-                    <td>{{ $loop->iteration }}</td>
-                    <td>{{ $d->kode_kriteria }}</td>
-                    <td>{{ $d->bobot_kriteria }}</td>
+                    <td class="text-center font-medium">{{ $loop->iteration }}</td>
+                    <td class="text-center font-medium">{{ $d->kode_kriteria }}</td>
+                    <td class="text-center font-medium">{{ $d->bobot_kriteria }}</td>
                 </tr>
                 @endforeach
               </tbody>

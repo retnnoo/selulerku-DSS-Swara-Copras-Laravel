@@ -17,7 +17,7 @@
         <a class="block px-3 py-2 rounded-lg hover:bg-blue-100 font-bold hover:text-blue-800 {{ Request::is('dashboard-admin/pembobotan') ? 'bg-blue-100 text-blue-800' : '' }}" href="{{ route('pembobotan') }}">SWARA & Pembobotan</a>
         <a class="block px-3 py-2 rounded-lg hover:bg-blue-100 font-bold hover:text-blue-800 {{ Request::is('dashboard-admin/rangking-copras') ? 'bg-blue-100 text-blue-800' : '' }}" href="{{ route('copras') }}">COPRAS</a>
         <a class="block px-3 py-2 rounded-lg hover:bg-blue-100 font-bold hover:text-blue-800 {{ Request::is('dashboard-admin/wilayah') ? 'bg-blue-100 text-blue-800' : '' }}" href="{{ route('wilayah') }}">Wilayah</a>
-        <a class="block px-3 py-2 rounded-lg hover:bg-blue-100 font-bold hover:text-blue-800 {{ Request::is('dashboard/admin/add') ? 'bg-blue-100 text-blue-800' : '' }}" href="{{ route('store.admin') }}">Data Admin</a>
+        <a class="block px-3 py-2 rounded-lg hover:bg-blue-100 font-bold hover:text-blue-800 {{ Request::is('dashboard/admin') ? 'bg-blue-100 text-blue-800' : '' }}" href="{{ route('admin') }}">Data Admin</a>
       </nav>
 
       <!-- Logout -->

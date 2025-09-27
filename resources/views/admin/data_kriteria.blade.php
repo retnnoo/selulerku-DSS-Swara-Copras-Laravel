@@ -6,7 +6,7 @@
   <title>Data Kriteria</title>
   <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
   <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-    @vite('resources/css/app.css')
+    @vite(['resources/css/app.css'])
 </head>
 
 <body class="bg-slate-50 text-slate-900">
@@ -24,14 +24,6 @@
         <p class="text-slate-500 mb-5">
           Daftar kriteria yang digunakan untuk pengambilan keputusan.
         </p>
-          @if (session()->has('success'))
-                        <div class="alert alert-success alert-dismissible fade show mt-4" role="alert">
-                            {{ session('success') }}
-                            <button type="button" class="close" data-bs-dismiss="alert"
-                                aria-label="Close"><span>&times;</span></button>
-                        </div>
-                    @endif
-
         <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-lg">
           <div class="flex justify-between items-center mb-4">
             <h2 class="text-2xl font-semibold text-(--warna1)">Tabel Kriteria</h2>
@@ -72,10 +64,14 @@
                            data-nama="{{ $items->nama_kriteria }}"
                            data-jenis="{{ $items->jenis_kriteria }}" 
                       class="px-3 py-1 text-xs font-medium bg-blue-100 text-blue-600 rounded-lg hover:bg-blue-200 transition">Edit</button>
-                      <form action="{{ route('delete.kriteria', $items->kode_kriteria) }}" method="POST">
-                        @csrf
-                        @method('DELETE')
-                        <button class="px-3 py-1 text-xs font-medium bg-red-100 text-red-600 rounded-lg hover:bg-red-200 transition">Hapus</button>
+                      <form id="delete-form-{{ $items->kode_kriteria }}" action="{{ route('delete.kriteria', $items->kode_kriteria) }}" method="POST" style="display:inline;">
+                          @csrf
+                          @method('DELETE')
+                          <button type="button" 
+                                    onclick="konfirmasiHapus('delete-form-{{ $items->kode_kriteria }}')" 
+                                    class="px-3 py-1 text-xs font-medium bg-red-100 text-red-600 rounded-lg hover:bg-red-200 transition">
+                                Hapus
+                            </button>
                       </form>
                     </td>
                   </tr>
@@ -131,8 +127,27 @@
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <!-- DataTables JS -->
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+
+<script>
+    // Flash success dari session
+    window.flashSuccess = @json(session('success'));
+
+    // Flash error dari session atau validasi
+    @if ($errors->any())
+        let messages = "";
+        @foreach ($errors->all() as $error)
+            messages += "{{ $error }}\n";
+        @endforeach
+        window.flashError = messages;
+    @else
+        window.flashError = @json(session('error'));
+    @endif
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="{{ asset('/js/script.js') }}"></script>
 
 
 <script>

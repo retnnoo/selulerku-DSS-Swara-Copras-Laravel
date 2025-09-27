@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // Flash message
+    // Tampilkan alert sukses
     if (window.flashSuccess) {
         Swal.fire({
             icon: "success",
@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
+    // Tampilkan alert error
     if (window.flashError) {
         Swal.fire({
             icon: "error",
@@ -21,7 +22,6 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function konfirmasiHapus(formId) {
-    console.log("formId:", formId);
     Swal.fire({
         title: "Yakin ingin menghapus?",
         text: "Data akan dihapus permanen!",
@@ -32,10 +32,8 @@ function konfirmasiHapus(formId) {
         confirmButtonText: "Ya, hapus!",
         cancelButtonText: "Batal",
     }).then((result) => {
-        console.log("result:", result);
         if (result.isConfirmed) {
             const form = document.getElementById(formId);
-            console.log("form:", form);
             if (form) form.submit();
         }
     });

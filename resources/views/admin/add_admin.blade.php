@@ -19,24 +19,15 @@
       <x-topbar></x-topbar>
 
       <!-- Main -->
+      <!-- Main -->
       <main class="max-w-[1200px] mx-auto px-4 lg:px-8 py-6 space-y-6">
         <h1 class="text-3xl font-bold text-(--warna1)">Daftar Admin</h1>
-        <p class="text-slate-500 mb-5">
-          Daftar admin yang mengelola Website ini.
-        </p>
-          @if (session()->has('success'))
-                        <div class="alert alert-success alert-dismissible fade show mt-4" role="alert">
-                            {{ session('success') }}
-                            <button type="button" class="close" data-bs-dismiss="alert"
-                                aria-label="Close"><span>&times;</span></button>
-                        </div>
-                    @endif
+        <p class="text-slate-500 mb-5">Daftar admin yang mengelola Website ini.</p>
 
         <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-lg">
           <div class="flex justify-between items-center mb-4">
             <h2 class="text-2xl font-semibold text-(--warna1)">Tabel Admin</h2>
-            <button 
-              onclick="openModal('modalTambah')"  
+            <button onclick="openModal('modalTambah')"  
               class="bg-gradient-to-r from-blue-400 to-(--warna1) hover:from-blue-400 hover:to-blue-400 text-white font-medium px-4 py-2 rounded-lg shadow transition">
               Tambah Admin
             </button>
@@ -49,21 +40,34 @@
                 <tr>
                   <th class="px-4 py-3 text-center">No</th>
                   <th class="px-4 py-3 text-center">Username</th>
-                  <th class="px-4 py-3 text-left">Password</th>
                   <th class="px-4 py-3 text-center">Aksi</th>
                 </tr>
               </thead>
               <tbody>
+                @foreach ($user as $index => $row)
                   <tr>
-                    <td class="text-center font-medium">1</td>
-                    <td class="text-center font-medium">Retno</td>
-                    <td class="text-center font-medium">33</td>
-                    <td class="text-center">
-                      <button onclick="openModal('modalEdit')"
-                      class="px-3 py-1 text-xs font-medium bg-blue-100 text-blue-600 rounded-lg hover:bg-blue-200 transition">Edit</button>
-                      <button class="px-3 py-1 text-xs font-medium bg-red-100 text-red-600 rounded-lg hover:bg-red-200 transition">Hapus</button>
+                    <td class="text-center font-medium">{{ $loop->iteration }}</td>
+                    <td class="text-center font-medium">{{ $row->name }}</td>
+                    <td class="text-center font-medium">
+                      <button onclick="openModal('modalEdit', this)" 
+                        data-id="{{ $row->id }}" 
+                        data-nama="{{ $row->name }}"
+                        class="px-3 py-1 text-xs font-medium bg-blue-100 text-blue-600 rounded-lg hover:bg-blue-200 transition">
+                        Edit
+                      </button>
+
+                      <!-- Tombol Hapus -->
+                      <form id="delete-form-{{ $row->id }}" action="{{ route('delete.admin', $row->id) }}" method="POST" class="inline">
+                        @csrf
+                        @method('DELETE')
+                        <button type="button" onclick="konfirmasiHapus('delete-form-{{ $row->id }}')"
+                        class="px-3 py-1 text-xs font-medium bg-red-100 text-red-600 rounded-lg hover:bg-red-200 transition">
+                          Hapus
+                        </button>
+                      </form>
                     </td>
                   </tr>
+                @endforeach
               </tbody>
             </table>
           </div>
@@ -72,44 +76,59 @@
     </div>
   </div>
 
-  <!--Modal Tambah--->
+  <!-- Modal Tambah -->
   <div id="modalTambah" class="hidden fixed inset-0 bg-black/50 items-center justify-center z-50">
-  <div class="bg-white rounded-lg p-6 w-full max-w-md">
-    <h3 class="text-lg font-semibold mb-4">Tambah Admin</h3>
-    <form action="" method="POST">
-      @csrf
-      <input type="text" placeholder="Username" name="name"  class="w-full border px-3 py-2 rounded mb-3">
-      <input type="password" placeholder="Password" name="password" class="w-full border px-3 py-2 rounded mb-3">
-      <div class="flex justify-end gap-2">
-        <button type="button" onclick="closeModal('modalTambah')" 
-                class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300">Batal</button>
-        <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">Simpan</button>
-      </div>
-    </form>
+    <div class="bg-white rounded-lg p-6 w-full max-w-md">
+      <h3 class="text-lg font-semibold mb-4">Tambah Admin</h3>
+      <form action="{{ route('store.admin') }}" method="POST">
+        @csrf
+        <input type="text" placeholder="Username" name="name" class="w-full border px-3 py-2 rounded mb-3" required>
+        <input type="password" placeholder="Password" name="password" class="w-full border px-3 py-2 rounded mb-3" required>
+        <div class="flex justify-end gap-2">
+          <button type="button" onclick="closeModal('modalTambah')" class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300">Batal</button>
+          <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">Simpan</button>
+        </div>
+      </form>
+    </div>
   </div>
-</div>
 
-<!-- Modal Edit -->
-<div id="modalEdit" class="hidden fixed inset-0 bg-black/50 items-center justify-center z-50">
-  <div class="bg-white rounded-lg p-6 w-full max-w-md">
-    <h3 class="text-lg font-semibold mb-4">Edit Alternatif</h3>
-    <form method="POST">
-      @csrf
-      <input type="text" id="" name="" value="Retno" class="w-full border px-3 py-2 rounded mb-3">
-      <input type="password" id="" name="" value="12345678" class="w-full border px-3 py-2 rounded mb-3">
-      <div class="flex justify-end gap-2">
-        <button type="button" onclick="closeModal('modalEdit')" 
-                class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300">Batal</button>
-        <button type="submit" class="px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600">Update</button>
-      </div>
-    </form>
+  <!-- Modal Edit -->
+  <div id="modalEdit" class="hidden fixed inset-0 bg-black/50 items-center justify-center z-50">
+    <div class="bg-white rounded-lg p-6 w-full max-w-md">
+      <h3 class="text-lg font-semibold mb-4">Edit Admin</h3>
+      <form method="POST" id="formEdit">
+        @csrf
+        <input type="text" id="edit_nama" name="name" class="w-full border px-3 py-2 rounded mb-3" required>
+        <input type="password" id="edit_password" name="password" placeholder="Kosongkan jika tidak ganti password" class="w-full border px-3 py-2 rounded mb-3">
+        <div class="flex justify-end gap-2">
+          <button type="button" onclick="closeModal('modalEdit')" class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300">Batal</button>
+          <button type="submit" class="px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600">Update</button>
+        </div>
+      </form>
+    </div>
   </div>
-</div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <!-- DataTables JS -->
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script>
+    // Flash success dari session
+    window.flashSuccess = @json(session('success'));
+
+    // Flash error dari session atau validasi
+    @if ($errors->any())
+        let messages = "";
+        @foreach ($errors->all() as $error)
+            messages += "{{ $error }}\n";
+        @endforeach
+        window.flashError = messages;
+    @else
+        window.flashError = @json(session('error'));
+    @endif
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="{{ asset('/js/script.js') }}"></script>
 
 
 <script>
@@ -167,16 +186,15 @@
     modal.classList.add("flex");
 
     if (button) {
-      // Ambil data dari tombol
-      const id = button.getAttribute('data-id');
+    const adminId = button.getAttribute('data-id');
       const nama = button.getAttribute('data-nama');
-      const jenis = button.getAttribute('data-jenis');
 
-      // Isi ke input modal
+      // isi field
       document.getElementById('edit_nama').value = nama;
-      document.getElementById('edit_jenis').value = jenis;
+      document.getElementById('edit_password').value = "";
 
-      document.querySelector('#modalEdit form').action = "{{ url('/dashboard-admin/kriteria/update-data') }}/" + id;
+      // set action form edit
+      document.getElementById('formEdit').action = "/dashboard-admin/admin/update-data/" + adminId;
     }
   }
 

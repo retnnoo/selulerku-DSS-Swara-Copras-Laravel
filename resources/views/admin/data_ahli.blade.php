@@ -50,29 +50,31 @@
               </thead>
               <tbody>
                 @foreach ($ahli as $a)
-            <tr>
-                <td>{{ $loop->iteration }}</td>
-                <td>{{ $a->kode_ahli }}</td>
-                @foreach ($kriteria as $k)
-                    @php
-                        $nilai = $a->nilai->firstWhere('kode_kriteria', $k->kode_kriteria);
-                    @endphp
-                    <td class="text-center">
-                        {{ $nilai ? $nilai->nilai : '-' }}
-                    </td>
+                <tr>
+                    <td>{{ $loop->iteration }}</td>
+                    <td>{{ $a->kode_ahli }}</td>
+                    @foreach ($kriteria as $k)
+                        @php
+                            $nilai = $a->nilai->firstWhere('kode_kriteria', $k->kode_kriteria);
+                        @endphp
+                        <td class="text-center">
+                            {{ $nilai ? $nilai->nilai : '-' }}
+                        </td>
+                    @endforeach
+                        <td  
+                          class="text-center">
+                          <button onclick="openModalEdit('{{ $a->kode_ahli }}', {{ $a->nilai->pluck('nilai', 'kode_kriteria') }})" class="px-3 py-1 text-xs font-medium bg-blue-100 text-blue-600 rounded-lg hover:bg-blue-200 transition">Edit</button>
+                          <form id="delete-form-{{ $a->kode_ahli }}" action="{{ route('delete.ahli', $a->kode_ahli) }}" method="POST" style="display:inline;">
+                              @csrf
+                              @method('DELETE')
+                              <button type="button" onclick="konfirmasiHapus('delete-form-{{ $a->kode_ahli }}')" 
+                                  class="px-3 py-1 text-xs font-medium bg-red-100 text-red-600 rounded-lg hover:bg-red-200 transition">
+                                  Hapus
+                              </button>
+                          </form>
+                        </td>
+                </tr>
                 @endforeach
-                    <td  
-                    class="text-center">
-                    <button onclick="openModalEdit('{{ $a->kode_ahli }}', {{ $a->nilai->pluck('nilai', 'kode_kriteria') }})" class="px-3 py-1 text-xs font-medium bg-blue-100 text-blue-600 rounded-lg hover:bg-blue-200 transition">Edit</button>
-                    <form action="{{ route('delete.ahli', $a->kode_ahli) }}" method="POST">
-                      @csrf
-                      @method('DELETE')
-                      <button class="px-3 py-1 text-xs font-medium bg-red-100 text-red-600 rounded-lg hover:bg-red-200 transition">Hapus</button>
-                    </form>
-                    
-                  </td>
-            </tr>
-        @endforeach
               </tbody>
             </table>
           </div>
@@ -119,8 +121,26 @@
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <!-- DataTables JS -->
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+<script>
+    // Flash success dari session
+    window.flashSuccess = @json(session('success'));
+
+    // Flash error dari session atau validasi
+    @if ($errors->any())
+        let messages = "";
+        @foreach ($errors->all() as $error)
+            messages += "{{ $error }}\n";
+        @endforeach
+        window.flashError = messages;
+    @else
+        window.flashError = @json(session('error'));
+    @endif
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="{{ asset('/js/script.js') }}"></script>
 
 
 <script>

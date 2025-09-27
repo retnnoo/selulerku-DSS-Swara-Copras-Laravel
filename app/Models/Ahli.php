@@ -17,17 +17,9 @@ class Ahli extends Model
     protected $keyType = 'string';
     public $timestamps = false;
 
-      public function nilai()
-    {
+    public function nilai(){
         return $this->hasMany(NilaiAhli::class, 'kode_ahli', 'kode_ahli');
     }
-
-    protected static function booted()
-{
-    static::deleting(function ($ahli) {
-        $ahli->nilai()->delete();
-    });
-}
 
 }
 
