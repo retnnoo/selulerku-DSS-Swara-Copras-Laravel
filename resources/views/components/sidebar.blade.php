@@ -22,10 +22,15 @@
 
       <!-- Logout -->
       <div class="p-4 border-t border-(--warna1)">
-        <button class="w-full px-4 py-2 rounded-lg bg-red-500 hover:bg-red-600 transition font-semibold text-white shadow">
-          Keluar
-        </button>
+        <form action="{{ route('logout') }}" method="POST">
+          @csrf
+          <button type="submit"
+            class="w-full px-4 py-2 rounded-lg bg-red-500 hover:bg-red-600 transition font-semibold text-white shadow">
+            Keluar
+          </button>
+        </form>
       </div>
     </aside>
+
     <!-- Overlay untuk mobile -->
     <div id="overlay" class="hidden fixed inset-0 bg-black/40 z-40 lg:hidden"></div>

@@ -67,13 +67,11 @@
       <div class="flex justify-center md:justify-end">
         <img src="{{ asset('img/beranda.png') }}" alt="Hero Image" class="w-full max-w-md rounded-lg">
       </div>
-
     </div>
   </section>
 
   <section class="pt-20 bg-gray-50">
     <div class="max-w-5xl mx-auto px-6 space-y-12">
-
       <!-- Bagian Pilih Wilayah -->
       <div class="text-center">
         <h1 class="text-3xl md:text-4xl font-bold leading-tight text-(--warna1) mb-4">
@@ -109,7 +107,7 @@
             <img id="operator-logo" src="./img/default.png" alt="Operator" class="h-16 mb-4">
             <h3 id="operator-nama" class="text-3xl font-extrabold">-</h3>
             <p class="mt-4 text-gray-600 text-base max-w-xl mx-auto">
-              {{ $best['name'] ?? '-' }} direkomendasikan karena memiliki skor COPRAS terbaik di wilayah ini, 
+              <span id="operator-nama2"></span> direkomendasikan karena memiliki skor COPRAS terbaik di wilayah ini, 
               yang dihitung berdasarkan pertimbangan semua kriteria utama seperti.
             </p>
           </div>
@@ -126,10 +124,8 @@
               <canvas id="chartRanking"></canvas>
             </div>
           </div>
-
         </div>
       </div>
-
     </div>
 </section>
 
@@ -154,6 +150,7 @@
       if (best) {
         const logo = document.getElementById('operator-logo');
         document.getElementById('operator-nama').textContent = best.name;
+        document.getElementById('operator-nama2').textContent = best.name;
         logo.src = `/img/${best.name.toLowerCase()}.png`;
         logo.alt = best.name;
       }

@@ -11,8 +11,7 @@ class LoginController extends Controller
         return view('admin.login_admin');
     }
 
-    public function authenticate(Request $request)
-    {    
+    public function authenticate(Request $request){    
         $credentials = $request->validate([
             'name' => 'required|string|max:16|min:8',
             'password' => 'required|string'
@@ -26,6 +25,16 @@ class LoginController extends Controller
            
         }
         return back()->with('error', 'Username atau Password salah!');
+    }
+
+    public function logout(Request $request){
+        Auth::logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        return redirect('/');
     }
 
 }

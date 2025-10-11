@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [UserController::class, 'index'])->name('beranda');
 Route::get('/login', [LoginController::class, 'index'])->name('login');
 Route::post('/login', [LoginController::class, 'authenticate'])->name('login.post');
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::get('/dashboard-admin/admin', [AdminController::class, 'indexAdmin'])->name('admin');
 Route::post('/dashboard-admin/admin/add', [AdminController::class, 'storeAdmin'])->name('store.admin');

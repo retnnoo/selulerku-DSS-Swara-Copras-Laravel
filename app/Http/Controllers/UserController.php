@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Wilayah;
 use App\Models\Copras;
+use Illuminate\Support\Facades\Log;
 
-class UserController extends Controller
-{
+class UserController extends Controller{
     public function index(Request $request){
         $wilayahList = Wilayah::all();
 
@@ -28,7 +28,10 @@ class UserController extends Controller
             $rankingPerWilayah[$wil->nama_wilayah] = $ranking;
         }
 
+    
+
         $defaultWilayah = $wilayahList->first()->nama_wilayah ?? 'Gang Buntu';
+        Log::info('wilayah : ' . $defaultWilayah);
         $defaultRanking = $rankingPerWilayah[$defaultWilayah] ?? collect();
         $best = $defaultRanking->first();
 
