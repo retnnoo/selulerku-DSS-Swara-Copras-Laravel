@@ -116,14 +116,16 @@
   <!--Modal Tambah--->
   <div id="modalTambah" class="hidden fixed inset-0 bg-black/50 items-center justify-center z-50">
   <div class="bg-white rounded-lg p-6 w-full max-w-md">
-    <h3 class="text-lg font-semibold mb-4">Tambah Alternatif</h3>
+    <h3 class="text-xl font-bold text-(--warna1) mb-4">Tambah Alternatif</h3>
     <form action="{{ route ('store.alternatif') }}" method="POST">
       @csrf
+      <label class="font-semibold">Nama Alternatif</label>
       <input type="text" placeholder="Nama Alternatif" name="nama_alternatif" class="w-full border px-3 py-2 rounded mb-3">
         @foreach ( $kriteria as $k )
+              <label class="font-semibold">{{ $k->nama_kriteria }}</label>
               <input type="text" placeholder="Nilai {{ $k->nama_kriteria }}" name="nilai[{{ $k->kode_kriteria }}]" class="w-full border px-3 py-2 rounded mb-3">    
         @endforeach
-        <input type="hidden" name="kode_wilayah" value="{{ request('wilayah') }}">
+      <input type="hidden" name="kode_wilayah" value="{{ request('wilayah') }}">
       <div class="flex justify-end gap-2">
         <button type="button" onclick="closeModal('modalTambah')" 
                 class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300">Batal</button>
@@ -136,12 +138,14 @@
 <!-- Modal Edit -->
 <div id="modalEdit" class="hidden fixed inset-0 bg-black/50 items-center justify-center z-50">
   <div class="bg-white rounded-lg p-6 w-full max-w-md">
-    <h3 class="text-lg font-semibold mb-4">Edit Alternatif</h3>
+    <h3 class="text-xl font-bold text-(--warna1) mb-4">Edit Alternatif</h3>
     <form method="POST">
       @csrf
-     <input type="text" name="nama_alternatif" id="inputNamaAlternatif" class="w-full border px-3 py-2 rounded mb-3 input-edit">
+      <label class="font-semibold">Nama Alternatif</label>
+      <input type="text" name="nama_alternatif" id="inputNamaAlternatif" class="w-full border px-3 py-2 rounded mb-3 input-edit">
        @foreach ( $kriteria as $k )
-              <input type="text" placeholder="Nilai {{ $k->nama_kriteria }}" name="nilai[{{ $k->kode_kriteria }}]" value="" class="w-full border px-3 py-2 rounded mb-3 input-edit">    
+          <label class="font-semibold">{{ $k->nama_kriteria }}</label>
+          <input type="text" placeholder="Nilai {{ $k->nama_kriteria }}" name="nilai[{{ $k->kode_kriteria }}]" value="" class="w-full border px-3 py-2 rounded mb-3 input-edit">    
         @endforeach
          <input type="hidden" name="kode_wilayah" value="{{ request('wilayah') }}">
       <div class="flex justify-end gap-2">

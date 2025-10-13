@@ -60,7 +60,7 @@
                            data-nama="{{ $items->nama_wilayah }}"
                       class="px-3 py-1 text-xs font-medium bg-blue-100 text-blue-600 rounded-lg hover:bg-blue-200 transition my-2">
                         <i class="fa-solid fa-pen-to-square text-xl"></i>
-                        <span class="hidden md:inline font-bold ml-2 text-base">Edit</span>
+                        <span class="hidden md:inline font-bold ml-1 text-base">Edit</span>
                       </button>
                       <form id="delete-form-{{ $items->kode_wilayah }}" action="{{ route('delete.wilayah', $items->kode_wilayah) }}" method="POST">
                         @csrf
@@ -68,7 +68,7 @@
                         <button type="button" onclick="konfirmasiHapus('delete-form-{{ $items->kode_wilayah }}')" 
                           class="px-3 py-1 text-xs font-medium bg-red-100 text-red-600 rounded-lg hover:bg-red-200 transition">
                           <i class="fa-solid fa-trash text-xl"></i>
-                          <span class="hidden md:inline font-bold ml-2 text-base">Hapus</span>
+                          <span class="hidden md:inline font-bold ml-1 text-base">Hapus</span>
                         </button>
                       </form>
                     </td>

@@ -91,15 +91,16 @@
   <!--Modal Tambah--->
   <div id="modalTambah" class="hidden fixed inset-0 bg-black/50 items-center justify-center z-50">
   <div class="bg-white rounded-lg p-6 w-full max-w-md">
-    <h3 class="text-lg font-semibold mb-4">Tambah Nilai Ahli</h3>
+    <h3 class="text-xl font-bold text-(--warna1) mb-4">Tambah Nilai Ahli</h3>
     <form action="{{ route('store.ahli') }}" method="POST">
         @csrf
         @foreach ( $kriteria as $k )
-              <input type="text" placeholder="Nilai {{ $k->nama_kriteria }}" name="nilai[{{ $k->kode_kriteria }}]" class="w-full border px-3 py-2 rounded mb-3">    
+          <label class="font-semibold">{{ $k->nama_kriteria }}</label>
+          <input type="text" placeholder="Nilai {{ $k->nama_kriteria }}" name="nilai[{{ $k->kode_kriteria }}]" class="w-full border px-3 py-2 rounded mb-3">    
         @endforeach
       <div class="flex justify-end gap-2">
         <button type="button" onclick="closeModal('modalTambah')" 
-                class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300">Batal</button>
+          class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300">Batal</button>
         <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">Simpan</button>
       </div>
     </form>
@@ -109,12 +110,13 @@
 <!-- Modal Edit -->
 <div id="modalEdit" class="hidden fixed inset-0 bg-black/50 items-center justify-center z-50">
   <div class="bg-white rounded-lg p-6 w-full max-w-md">
-    <h3 class="text-lg font-semibold mb-4">Edit Kriteria</h3>
+    <h3 class="text-xl font-bold text-(--warna1) mb-4">Edit Kriteria</h3>
     <form method="POST">
       @csrf
-     @foreach ( $kriteria as $k )
-              <input type="text" placeholder="Nilai {{ $k->nama_kriteria }}" name="nilai[{{ $k->kode_kriteria }}]" value="" class="w-full border px-3 py-2 rounded mb-3">    
-        @endforeach
+      @foreach ( $kriteria as $k )
+        <label class="font-semibold">{{ $k->nama_kriteria }}</label>
+        <input type="text" placeholder="Nilai {{ $k->nama_kriteria }}" name="nilai[{{ $k->kode_kriteria }}]" value="" class="w-full border px-3 py-2 rounded mb-3">    
+      @endforeach
       <div class="flex justify-end gap-2">
         <button type="button" onclick="closeModal('modalEdit')" 
                 class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300">Batal</button>

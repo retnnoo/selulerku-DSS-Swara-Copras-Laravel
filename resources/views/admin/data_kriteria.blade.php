@@ -93,11 +93,14 @@
   <!--Modal Tambah--->
   <div id="modalTambah" class="hidden fixed inset-0 bg-black/50 items-center justify-center z-50">
   <div class="bg-white rounded-lg p-6 w-full max-w-md">
-    <h3 class="text-lg font-semibold mb-4">Tambah Kriteria</h3>
+    <h3 class="text-xl font-bold text-(--warna1) mb-4">Tambah Kriteria</h3>
     <form action="{{ route('store.kriteria') }}" method="POST">
       @csrf
-      <input type="text" placeholder="Kode Kriteria" name="kode_kriteria" class="w-full border px-3 py-2 rounded mb-3">
-      <input type="text" placeholder="Nama Kriteria" name="nama_kriteria" class="w-full border px-3 py-2 rounded mb-3">
+      <label class="font-semibold">Kode Kriteria</label>
+      <input type="text" placeholder="Input Kode Kriteria" name="kode_kriteria" class="w-full border px-3 py-2 rounded mb-3">
+      <label class="font-semibold">Nama Kriteria</label>
+      <input type="text" placeholder="Input Nama Kriteria" name="nama_kriteria" class="w-full border px-3 py-2 rounded mb-3">
+      <label class="font-semibold">Jenis Kriteria</label>
       <select name="jenis_kriteria" class="w-full border px-3 py-2 rounded mb-3">
         <option value="benefit">Benefit</option>
         <option value="cost">Cost</option>
@@ -114,10 +117,12 @@
 <!-- Modal Edit -->
 <div id="modalEdit" class="hidden fixed inset-0 bg-black/50 items-center justify-center z-50">
   <div class="bg-white rounded-lg p-6 w-full max-w-md">
-    <h3 class="text-lg font-semibold mb-4">Edit Kriteria</h3>
+    <h3 class="text-xl font-bold text-(--warna1) mb-4">Edit Kriteria</h3>
     <form method="POST">
       @csrf
+      <label class="font-semibold">Nama Kriteria</label>
       <input type="text" id="edit_nama" name="nama_kriteria" class="w-full border px-3 py-2 rounded mb-3">
+      <label class="font-semibold">Jenis Kriteria</label>
       <select class="w-full border px-3 py-2 rounded mb-3" id="edit_jenis" name="jenis_kriteria">
         <option value="benefit">Benefit</option>
         <option value="cost">Cost</option>

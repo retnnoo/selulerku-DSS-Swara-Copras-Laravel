@@ -18,8 +18,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\View;
 
 
-class AdminController extends Controller
-{
+class AdminController extends Controller{
 
     public function index(){
         $countKriteria   = Kriteria::count();
