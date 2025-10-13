@@ -10,7 +10,7 @@
 
       <!-- Menu -->
       <nav class="flex-1 overflow-y-auto px-3 py-4 space-y-1">
-        <a class="block px-3 py-2 rounded-lg hover:bg-blue-100 font-bold hover:text-blue-800 {{ Request::is('dashboard-admin') ? 'bg-blue-100 text-blue-800' : '' }}" href="{{ route('dashboard') }}">Beranda</a>
+        <a class="block px-3 py-2 rounded-lg hover:bg-blue-100 font-bold hover:text-blue-800 {{ Request::is('dashboard-login-admin') ? 'bg-blue-100 text-blue-800' : '' }}" href="{{ route('dashboard') }}">Beranda</a>
         <a class="block px-3 py-2 rounded-lg hover:bg-blue-100 font-bold hover:text-blue-800 {{ Request::is('dashboard-admin/kriteria') ? 'bg-blue-100 text-blue-800' : '' }}" href="{{ route('kriteria') }}">Data Kriteria</a>
         <a class="block px-3 py-2 rounded-lg hover:bg-blue-100 font-bold hover:text-blue-800 {{ Request::is('dashboard-admin/alternatif') ? 'bg-blue-100 text-blue-800' : '' }}" href="{{ route('alternatif') }}">Data Alternatif</a>
         <a class="block px-3 py-2 rounded-lg hover:bg-blue-100 font-bold hover:text-blue-800 {{ Request::is('dashboard-admin/ahli') ? 'bg-blue-100 text-blue-800' : '' }}" href="{{ route('ahli') }}">Data Ahli</a>
@@ -26,7 +26,7 @@
           @csrf
           <button type="submit"
             class="w-full px-4 py-2 rounded-lg bg-red-500 hover:bg-red-600 transition font-semibold text-white shadow">
-            Keluar
+            Logout
           </button>
         </form>
       </div>

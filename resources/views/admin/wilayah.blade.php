@@ -4,6 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Wilayah</title>
+  <!--icon-->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
   <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     @vite('resources/css/app.css')
@@ -29,8 +31,9 @@
             <h2 class="text-2xl font-semibold text-(--warna1)">Tabel Wilayah</h2>
             <button 
               onclick="openModal('modalTambah')"  
-              class="bg-gradient-to-r from-blue-400 to-(--warna1) hover:from-blue-400 hover:to-blue-400 text-white font-medium px-4 py-2 rounded-lg shadow transition">
-              Tambah Wilayah
+              class="bg-gradient-to-r from-blue-400 to-(--warna1) hover:from-blue-400 hover:to-blue-400 text-white font-bold px-4 py-2 rounded-lg shadow transition">
+              <i class="fa-solid fa-plus text-xl"></i>
+              <span class="hidden md:inline">Tambah Wilayah</span>
             </button>
           </div>
 
@@ -55,12 +58,18 @@
                       <button onclick="openModal('modalEdit', this)"
                            data-id="{{ $items->kode_wilayah }}"
                            data-nama="{{ $items->nama_wilayah }}"
-                      class="px-3 py-1 text-xs font-medium bg-blue-100 text-blue-600 rounded-lg hover:bg-blue-200 transition">Edit</button>
+                      class="px-3 py-1 text-xs font-medium bg-blue-100 text-blue-600 rounded-lg hover:bg-blue-200 transition my-2">
+                        <i class="fa-solid fa-pen-to-square text-xl"></i>
+                        <span class="hidden md:inline font-bold ml-2 text-base">Edit</span>
+                      </button>
                       <form id="delete-form-{{ $items->kode_wilayah }}" action="{{ route('delete.wilayah', $items->kode_wilayah) }}" method="POST">
                         @csrf
                         @method('DELETE')
                         <button type="button" onclick="konfirmasiHapus('delete-form-{{ $items->kode_wilayah }}')" 
-                        class="px-3 py-1 text-xs font-medium bg-red-100 text-red-600 rounded-lg hover:bg-red-200 transition">Hapus</button>
+                          class="px-3 py-1 text-xs font-medium bg-red-100 text-red-600 rounded-lg hover:bg-red-200 transition">
+                          <i class="fa-solid fa-trash text-xl"></i>
+                          <span class="hidden md:inline font-bold ml-2 text-base">Hapus</span>
+                        </button>
                       </form>
                     </td>
                   </tr>

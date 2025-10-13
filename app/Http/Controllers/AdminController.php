@@ -27,7 +27,6 @@ class AdminController extends Controller
         $countAdmin      = User::count();
         $countWilayah    = Wilayah::count();
 
-
         $wilayahList = Wilayah::all();
         $rankingPerWilayah = [];
         foreach ($wilayahList as $wil) {

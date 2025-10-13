@@ -4,6 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Data Alternatif</title>
+  <!--icon-->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
   <!--select-->
   <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
@@ -53,8 +55,9 @@
             <h2 class="text-2xl font-semibold text-(--warna1)">Tabel Alternatif</h2>
             <button 
               onclick="openModal('modalTambah')"  
-              class="bg-gradient-to-r from-blue-400 to-(--warna1) hover:from-blue-400 hover:to-blue-400 text-white font-medium px-4 py-2 rounded-lg shadow transition">
-              Tambah Alternatif
+              class="bg-gradient-to-r from-blue-400 to-(--warna1) hover:from-blue-400 hover:to-blue-400 text-white font-bold px-4 py-2 rounded-lg shadow transition">
+              <i class="fa-solid fa-plus text-xl"></i>
+              <span class="hidden md:inline">Tambah Alternatif</span>
             </button>
           </div>
 
@@ -87,14 +90,16 @@
                     <td class="text-center">
                   <button 
                     onclick="openModalEdit('{{ $a->kode_alternatif }}', {{ $a->nilaiAlternatif->pluck('nilai', 'kode_kriteria') }}, '{{ $a->nama_alternatif }}')"
-                    class="px-3 py-1 text-xs font-medium bg-blue-100 text-blue-600 rounded-lg hover:bg-blue-200 transition">
-                    Edit
+                    class="px-3 py-1 text-xs font-medium bg-blue-100 text-blue-600 rounded-lg hover:bg-blue-200 transition my-2">
+                    <i class="fa-solid fa-pen-to-square text-xl"></i>
                   </button>
                       <form id="delete-form-{{ $a->kode_alternatif }}" action="{{route('delete.alternatif', $a->kode_alternatif)}}" method="POST">
                         @method('DELETE')
                         @csrf
                         <button type="button" onclick="konfirmasiHapus('delete-form-{{ $a->kode_alternatif }}')"
-                        class="px-3 py-1 text-xs font-medium bg-red-100 text-red-600 rounded-lg hover:bg-red-200 transition">Hapus</button>
+                          class="px-3 py-1 text-xs font-medium bg-red-100 text-red-600 rounded-lg hover:bg-red-200 transition">
+                          <i class="fa-solid fa-trash text-xl"></i>
+                        </button>
                       </form>
                     </td>
                   </tr>

@@ -30,9 +30,9 @@
           <div class="flex justify-between items-center mb-4">
             <h2 class="text-2xl font-semibold text-(--warna1)">Tabel Admin</h2>
             <button onclick="openModal('modalTambah')"  
-              class="bg-gradient-to-r from-blue-400 to-(--warna1) hover:from-blue-400 hover:to-blue-400 text-white font-medium px-4 py-2 rounded-lg shadow transition">
+              class="bg-gradient-to-r from-blue-400 to-(--warna1) hover:from-blue-400 hover:to-blue-400 text-white font-bold px-4 py-2 rounded-lg shadow transition">
               <i class="fa-solid fa-plus text-xl"></i>
-              <span class="hidden md:inline"> Tambah Admin</span>
+              <span class="hidden md:inline">Tambah Admin</span>
             </button>
           </div>
 
@@ -55,9 +55,9 @@
                       <button onclick="openModal('modalEdit', this)" 
                         data-id="{{ $row->id }}" 
                         data-nama="{{ $row->name }}"
-                        class="px-3 py-1 text-xs font-medium bg-blue-100 text-blue-500 rounded-lg hover:bg-blue-200 transition">
+                        class="px-3 py-1 text-xs font-medium bg-blue-100 text-blue-600 rounded-lg hover:bg-blue-200 transition">
                         <i class="fa-solid fa-pen-to-square text-xl"></i>
-                          <span class="hidden md:inline font-bold ml-2 text-base">Edit</span>
+                        <span class="hidden md:inline font-bold ml-2 text-base">Edit</span>
                       </button>
 
                       <!-- Tombol Hapus -->
@@ -65,7 +65,7 @@
                         @csrf
                         @method('DELETE')
                         <button type="button" onclick="konfirmasiHapus('delete-form-{{ $row->id }}')"
-                        class="px-3 py-1 text-xs font-medium bg-red-100 text-red-400 rounded-lg hover:bg-red-200 transition">
+                        class="px-3 py-1 text-xs font-medium bg-red-100 text-red-600 rounded-lg hover:bg-red-200 transition">
                         <i class="fa-solid fa-trash text-xl"></i>
                           <span class="hidden md:inline font-bold ml-2 text-base">Hapus</span>
                         </button>

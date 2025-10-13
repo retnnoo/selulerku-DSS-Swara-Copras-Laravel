@@ -4,6 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Data Kriteria</title>
+  <!--icon-->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
   <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     @vite(['resources/css/app.css'])
@@ -29,8 +31,9 @@
             <h2 class="text-2xl font-semibold text-(--warna1)">Tabel Kriteria</h2>
             <button 
               onclick="openModal('modalTambah')"  
-              class="bg-gradient-to-r from-blue-400 to-(--warna1) hover:from-blue-400 hover:to-blue-400 text-white font-medium px-4 py-2 rounded-lg shadow transition">
-              Tambah Kriteria
+              class="bg-gradient-to-r from-blue-400 to-(--warna1) hover:from-blue-400 hover:to-blue-400 text-white font-bold px-4 py-2 rounded-lg shadow transition">
+              <i class="fa-solid fa-plus text-xl"></i>
+              <span class="hidden md:inline">Tambah Kriteria</span>
             </button>
           </div>
 
@@ -57,21 +60,24 @@
                       @else 
                       <td class="text-center"><span class="px-2 py-1 bg-red-100 text-red-600 text-xs font-semibold rounded-lg">{{ $items->jenis_kriteria }}</span></td>
                     @endif
-                    
                     <td class="text-center">
                       <button onclick="openModal('modalEdit', this)"
                            data-id="{{ $items->kode_kriteria }}"
                            data-nama="{{ $items->nama_kriteria }}"
                            data-jenis="{{ $items->jenis_kriteria }}" 
-                      class="px-3 py-1 text-xs font-medium bg-blue-100 text-blue-600 rounded-lg hover:bg-blue-200 transition">Edit</button>
+                           class="px-3 py-1 text-xs font-medium bg-blue-100 text-blue-600 rounded-lg hover:bg-blue-200 transition my-2">
+                        <i class="fa-solid fa-pen-to-square text-xl"></i>
+                        <span class="hidden md:inline font-bold ml-2 text-base">Edit</span>
+                      </button>
                       <form id="delete-form-{{ $items->kode_kriteria }}" action="{{ route('delete.kriteria', $items->kode_kriteria) }}" method="POST" style="display:inline;">
                           @csrf
                           @method('DELETE')
-                          <button type="button" 
-                                    onclick="konfirmasiHapus('delete-form-{{ $items->kode_kriteria }}')" 
-                                    class="px-3 py-1 text-xs font-medium bg-red-100 text-red-600 rounded-lg hover:bg-red-200 transition">
-                                Hapus
-                            </button>
+                          <button type="button"
+                            onclick="konfirmasiHapus('delete-form-{{ $items->kode_kriteria }}')" 
+                            class="px-3 py-1 text-xs font-medium bg-red-100 text-red-600 rounded-lg hover:bg-red-200 transition">
+                            <i class="fa-solid fa-trash text-xl"></i>
+                            <span class="hidden md:inline font-bold ml-2 text-base">Hapus</span>
+                          </button>
                       </form>
                     </td>
                   </tr>
@@ -98,7 +104,7 @@
       </select>
       <div class="flex justify-end gap-2">
         <button type="button" onclick="closeModal('modalTambah')" 
-                class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300">Batal</button>
+        class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300">Batal</button>
         <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">Simpan</button>
       </div>
     </form>
