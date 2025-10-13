@@ -85,10 +85,12 @@
   <!--Modal Tambah--->
   <div id="modalTambah" class="hidden fixed inset-0 bg-black/50 items-center justify-center z-50">
   <div class="bg-white rounded-lg p-6 w-full max-w-md">
-    <h3 class="text-lg font-semibold mb-4">Tambah Wilayah</h3>
+    <h3 class="text-xl font-bold text-(--warna1) mb-4">Tambah Wilayah</h3>
     <form action="{{ route('store.wilayah') }}" method="POST">
       @csrf
+      <label class="font-semibold">Kode Wilayah</label>
       <input type="text" placeholder="Kode Wilayah" name="kode_wilayah" class="w-full border px-3 py-2 rounded mb-3">
+      <label class="font-semibold">Nama Wilayah</label>
       <input type="text" placeholder="Nama wilayah" name="nama_wilayah" class="w-full border px-3 py-2 rounded mb-3">
       <div class="flex justify-end gap-2">
         <button type="button" onclick="closeModal('modalTambah')" 
@@ -102,13 +104,14 @@
 <!-- Modal Edit -->
 <div id="modalEdit" class="hidden fixed inset-0 bg-black/50 items-center justify-center z-50">
   <div class="bg-white rounded-lg p-6 w-full max-w-md">
-    <h3 class="text-lg font-semibold mb-4">Edit Wilayah</h3>
+    <h3 class="text-xl font-bold text-(--warna1) mb-4">Edit Wilayah</h3>
     <form method="POST">
       @csrf
+      <label class="font-semibold">Nama Wilayah</label>
       <input type="text" id="edit_nama" name="nama_wilayah" class="w-full border px-3 py-2 rounded mb-3">
       <div class="flex justify-end gap-2">
         <button type="button" onclick="closeModal('modalEdit')" 
-                class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300">Batal</button>
+          class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300">Batal</button>
         <button type="submit" class="px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600">Update</button>
       </div>
     </form>

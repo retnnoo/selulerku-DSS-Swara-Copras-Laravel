@@ -113,49 +113,68 @@
     </div>
   </div>
 
-  <!--Modal Tambah--->
-  <div id="modalTambah" class="hidden fixed inset-0 bg-black/50 items-center justify-center z-50">
-  <div class="bg-white rounded-lg p-6 w-full max-w-md">
-    <h3 class="text-xl font-bold text-(--warna1) mb-4">Tambah Alternatif</h3>
-    <form action="{{ route ('store.alternatif') }}" method="POST">
+<div id="modalTambah" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50 overflow-y-auto">
+  <div class="bg-white rounded-lg p-6 w-full max-w-md my-10 max-h-[90vh] overflow-y-auto">
+    <h3 class="text-xl font-bold text-blue-600 mb-4">Tambah Alternatif</h3>
+    <form action="{{ route('store.alternatif') }}" method="POST">
       @csrf
+
       <label class="font-semibold">Nama Alternatif</label>
       <input type="text" placeholder="Nama Alternatif" name="nama_alternatif" class="w-full border px-3 py-2 rounded mb-3">
-        @foreach ( $kriteria as $k )
-              <label class="font-semibold">{{ $k->nama_kriteria }}</label>
-              <input type="text" placeholder="Nilai {{ $k->nama_kriteria }}" name="nilai[{{ $k->kode_kriteria }}]" class="w-full border px-3 py-2 rounded mb-3">    
-        @endforeach
+
+      @foreach ($kriteria as $k)
+        <label class="font-semibold">{{ $k->nama_kriteria }}</label>
+        <input type="text" placeholder="Nilai {{ $k->nama_kriteria }}" name="nilai[{{ $k->kode_kriteria }}]" class="w-full border px-3 py-2 rounded mb-3">
+      @endforeach
+
       <input type="hidden" name="kode_wilayah" value="{{ request('wilayah') }}">
-      <div class="flex justify-end gap-2">
+
+      <div class="flex justify-end gap-2 mt-4">
         <button type="button" onclick="closeModal('modalTambah')" 
-                class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300">Batal</button>
-        <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">Simpan</button>
+                class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300">
+          Batal
+        </button>
+        <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+          Simpan
+        </button>
       </div>
     </form>
   </div>
 </div>
 
-<!-- Modal Edit -->
-<div id="modalEdit" class="hidden fixed inset-0 bg-black/50 items-center justify-center z-50">
-  <div class="bg-white rounded-lg p-6 w-full max-w-md">
-    <h3 class="text-xl font-bold text-(--warna1) mb-4">Edit Alternatif</h3>
+<div id="modalEdit" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50 overflow-y-auto">
+  <div class="bg-white rounded-lg p-6 w-full max-w-md my-10 max-h-[90vh] overflow-y-auto">
+    <h3 class="text-xl font-bold text-yellow-600 mb-4">Edit Alternatif</h3>
     <form method="POST">
       @csrf
+
       <label class="font-semibold">Nama Alternatif</label>
-      <input type="text" name="nama_alternatif" id="inputNamaAlternatif" class="w-full border px-3 py-2 rounded mb-3 input-edit">
-       @foreach ( $kriteria as $k )
-          <label class="font-semibold">{{ $k->nama_kriteria }}</label>
-          <input type="text" placeholder="Nilai {{ $k->nama_kriteria }}" name="nilai[{{ $k->kode_kriteria }}]" value="" class="w-full border px-3 py-2 rounded mb-3 input-edit">    
-        @endforeach
-         <input type="hidden" name="kode_wilayah" value="{{ request('wilayah') }}">
-      <div class="flex justify-end gap-2">
+      <input type="text" name="nama_alternatif" id="inputNamaAlternatif"
+             class="w-full border px-3 py-2 rounded mb-3 input-edit">
+
+      @foreach ($kriteria as $k)
+        <label class="font-semibold">{{ $k->nama_kriteria }}</label>
+        <input type="text" placeholder="Nilai {{ $k->nama_kriteria }}"
+               name="nilai[{{ $k->kode_kriteria }}]" value=""
+               class="w-full border px-3 py-2 rounded mb-3 input-edit">
+      @endforeach
+
+      <input type="hidden" name="kode_wilayah" value="{{ request('wilayah') }}">
+
+      <div class="flex justify-end gap-2 mt-4">
         <button type="button" onclick="closeModal('modalEdit')" 
-                class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300">Batal</button>
-        <button type="submit" class="px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600">Update</button>
+                class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300">
+          Batal
+        </button>
+        <button type="submit" 
+                class="px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600">
+          Update
+        </button>
       </div>
     </form>
   </div>
 </div>
+
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -241,12 +260,14 @@
     const modal = document.getElementById(id);
     modal.classList.add("flex");
     modal.classList.remove("hidden");
+    document.body.classList.add('overflow-hidden');
   }
 
   function openModalEdit(kodeAlternatif, nilaiData, namaAlternatif) {
     const modal = document.getElementById('modalEdit');
     modal.classList.remove("hidden");
     modal.classList.add("flex");
+    document.body.classList.add('overflow-hidden');
 
     modal.querySelectorAll('.input-edit').forEach(input => {
         input.value = '';
@@ -271,6 +292,7 @@
     const modal = document.getElementById(id);
     modal.classList.add("hidden");
     modal.classList.remove("flex");
+    document.body.classList.remove('overflow-hidden');
   }
 
 </script>

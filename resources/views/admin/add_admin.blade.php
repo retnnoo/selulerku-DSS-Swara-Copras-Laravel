@@ -84,10 +84,12 @@
   <!-- Modal Tambah -->
   <div id="modalTambah" class="hidden fixed inset-0 bg-black/50 items-center justify-center z-50">
     <div class="bg-white rounded-lg p-6 w-full max-w-md">
-      <h3 class="text-lg font-semibold mb-4">Tambah Admin</h3>
+      <h3 class="text-xl font-bold text-(--warna1) mb-4">Tambah Admin</h3>
       <form action="{{ route('store.admin') }}" method="POST">
         @csrf
+        <label class="font-semibold">Username</label>
         <input type="text" placeholder="Username" name="name" class="w-full border px-3 py-2 rounded mb-3" required>
+        <label class="font-semibold">Password</label>
         <input type="password" placeholder="Password" name="password" class="w-full border px-3 py-2 rounded mb-3" required>
         <div class="flex justify-end gap-2">
           <button type="button" onclick="closeModal('modalTambah')" class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300">Batal</button>
@@ -100,10 +102,12 @@
   <!-- Modal Edit -->
   <div id="modalEdit" class="hidden fixed inset-0 bg-black/50 items-center justify-center z-50">
     <div class="bg-white rounded-lg p-6 w-full max-w-md">
-      <h3 class="text-lg font-semibold mb-4">Edit Admin</h3>
+      <h3 class="text-xl font-bold text-(--warna1) mb-4">Edit Admin</h3>
       <form method="POST" id="formEdit">
         @csrf
+        <label class="font-semibold">Username</label>
         <input type="text" id="edit_nama" name="name" class="w-full border px-3 py-2 rounded mb-3" required>
+        <label class="font-semibold">Password</label>
         <input type="password" id="edit_password" name="password" placeholder="Kosongkan jika tidak ganti password" class="w-full border px-3 py-2 rounded mb-3">
         <div class="flex justify-end gap-2">
           <button type="button" onclick="closeModal('modalEdit')" class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300">Batal</button>
