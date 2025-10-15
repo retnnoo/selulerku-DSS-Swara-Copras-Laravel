@@ -40,10 +40,12 @@
         <p class="text-gray-600">
           SelulerKu bantu kamu nemuin operator terbaik di wilayah Timbangan Indralaya Utara. 
           Mulai dari kecepatan dan stabilitas sinyal, jangkauan, harga paket, bonus, masa aktif, sampai layanan 
-          operator semuanya dibandingin biar kamu dapet rekomendasi yang paling pas buat kebutuhan kamu. Sistem ini merupakan sistem pendukung keputusan yang pakai metode SWARA buat nentuin seberapa penting tiap kriteria, terus COPRAS buat nge-rangking operator, jadi rekomendasinya lebih akurat dan sesuai sama kebutuhanmu.
+          operator semuanya dibandingin biar kamu dapet rekomendasi yang paling pas buat kebutuhan kamu. 
+          Sistem ini Sistem ini merupakan sistem pendukung keputusan yang pakai metode SWARA buat nentuin seberapa penting tiap kriteria, 
+          terus COPRAS buat nge-rangking operator, jadi rekomendasinya lebih akurat dan sesuai sama kebutuhanmu.
         </p>
 
-        <div class="grid grid-cols-6 gap-3 pt-4 mb-10">
+        <div class="grid grid-cols-3 md:grid-cols-6 gap-3 pt-4 mb-10">
           <div class="bg-white shadow rounded-lg flex items-center justify-center p-1">
             <img src="./img/telkomsel.png" alt="telkomsel" class="h-10">
           </div>
