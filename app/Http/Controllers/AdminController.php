@@ -283,15 +283,24 @@ class AdminController extends Controller{
         ]);
 
         try {
-            // Buat kode alternatif baru
-            $last = Alternatif::orderByRaw('CAST(SUBSTRING(kode_alternatif, 2) AS UNSIGNED) DESC')->first();
-            $newKode = $last ? 'A' . ((int) substr($last->kode_alternatif, 1) + 1) : 'A1';
+            $namaLower = strtolower($data['nama_alternatif']);
 
-            // Buat data alternatif
-            $alternatif = Alternatif::create([
+            $existingAlternatif = Alternatif::whereRaw('LOWER(nama_alternatif) = ?', [$namaLower])->first();
+    
+            
+            if($existingAlternatif){
+                $newKode = $existingAlternatif->kode_alternatif; 
+            }
+             else{
+               $last = Alternatif::orderByRaw('CAST(SUBSTRING(kode_alternatif, 2) AS UNSIGNED) DESC')->first();
+                $newKode = $last ? 'A' . ((int) substr($last->kode_alternatif, 1) + 1) : 'A1';
+
+                // Buat data alternatif
+                Alternatif::create([
                 'kode_alternatif' => $newKode,
                 'nama_alternatif' => $data['nama_alternatif'],
             ]);
+            }
 
             // Jika kode wilayah kosong, ambil default wilayah pertama
             $kodeWilayah = $data['kode_wilayah'] ?? Wilayah::orderByRaw('CAST(SUBSTRING(kode_wilayah, 2) AS UNSIGNED) ASC')
@@ -301,17 +310,17 @@ class AdminController extends Controller{
             // Simpan nilai kriteria
             foreach ($data['nilai'] as $kode_kriteria => $val) {
                 DB::table('nilai_alternatif')->insert([
-                    'kode_alternatif' => $alternatif->kode_alternatif,
+                    'kode_alternatif' => $newKode,
                     'kode_kriteria'   => $kode_kriteria,
                     'kode_wilayah'    => $kodeWilayah,
                     'nilai'           => $val,
                 ]);
             }
 
-            return redirect()->route('alternatif')->with('success', 'Data alternatif berhasil ditambahkan!');
+            return redirect()->back()->with('success', 'Data alternatif berhasil ditambahkan!');
         } catch (\Exception $e) {
             // Optional: bisa log $e->getMessage() untuk debugging
-            return redirect()->route('alternatif')->with('error', 'Gagal menambahkan data alternatif!');
+            return redirect()->back()->with('error', 'Gagal menambahkan data alternatif!' . $e);
         }
     }
 

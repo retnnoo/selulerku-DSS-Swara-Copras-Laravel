@@ -23,8 +23,11 @@
       <!-- Main -->
       <main class="max-w-[1200px] mx-auto px-4 lg:px-8 py-6 space-y-6">
         <h1 class="text-3xl font-bold text-(--warna1)">Daftar Wilayah</h1>
-        <p class="text-slate-500 mb-5">
-          Daftar Wilayah.
+        <p class="text-slate-500 mb-10">
+          Daftar wilayah atau lokasi yang menjadi cakupan sistem.
+          Setiap wilayah berfungsi sebagai titik referensi untuk mengelola dan memantau aktivitas 
+          pengambilan keputusan yang terkait dengan alternatif, serta kriteria seperti kecepatan sinyal, 
+          cakupan jaringan, layanan operator, dan faktor terkait lainnya.
         </p>
         <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-lg">
           <div class="flex justify-between items-center mb-4">

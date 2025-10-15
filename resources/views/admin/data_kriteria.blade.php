@@ -23,8 +23,11 @@
       <!-- Main -->
       <main class="max-w-[1200px] mx-auto px-4 lg:px-8 py-6 space-y-6">
         <h1 class="text-3xl font-bold text-(--warna1)">Daftar Kriteria</h1>
-        <p class="text-slate-500 mb-5">
-          Daftar kriteria yang digunakan untuk pengambilan keputusan.
+        <p class="text-slate-500 mb-10">
+          Kriteria  berikut merupakan kriteria yang digunakan dalam proses 
+          pengambilan keputusan pada sistem pendukung keputusan pemilihan operator seluler terbaik. 
+          Setiap kriteria merepresentasikan faktor-faktor penting yang menjadi dasar penilaian terhadap 
+          alternatif atau operator seluler yang akan dibandingkan.
         </p>
         <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-lg">
           <div class="flex justify-between items-center mb-4">

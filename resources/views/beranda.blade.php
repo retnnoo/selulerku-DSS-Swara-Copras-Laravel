@@ -38,7 +38,9 @@
           Temukan Operator Seluler Terbaik Untukmu
         </h1>
         <p class="text-gray-600">
-          SelulerKu bantu kamu nemuin operator terbaik di wilayah Timbangan Indralaya Utara. Mulai dari kecepatan dan stabilitas sinyal, jangkauan, harga paket, bonus, masa aktif, sampai layanan operator semuanya dibandingin biar kamu dapet rekomendasi yang paling pas buat kebutuhan kamu.
+          SelulerKu bantu kamu nemuin operator terbaik di wilayah Timbangan Indralaya Utara. 
+          Mulai dari kecepatan dan stabilitas sinyal, jangkauan, harga paket, bonus, masa aktif, sampai layanan 
+          operator semuanya dibandingin biar kamu dapet rekomendasi yang paling pas buat kebutuhan kamu. Sistem ini merupakan sistem pendukung keputusan yang pakai metode SWARA buat nentuin seberapa penting tiap kriteria, terus COPRAS buat nge-rangking operator, jadi rekomendasinya lebih akurat dan sesuai sama kebutuhanmu.
         </p>
 
         <div class="grid grid-cols-6 gap-3 pt-4 mb-10">
@@ -107,8 +109,8 @@
             <img id="operator-logo" src="./img/default.png" alt="Operator" class="h-16 mb-4">
             <h3 id="operator-nama" class="text-3xl font-extrabold">-</h3>
             <p class="mt-4 text-gray-600 text-base max-w-xl mx-auto">
-              <span id="operator-nama2"></span> direkomendasikan karena memiliki skor COPRAS terbaik di wilayah ini, 
-              yang dihitung berdasarkan pertimbangan semua kriteria utama seperti.
+              <span id="operator-nama2"></span> direkomendasikan karena memperoleh skor COPRAS tertinggi di wilayah ini,
+              yang dihitung berdasarkan pertimbangan seluruh nilai kriteria dari data tahun 2025.
             </p>
           </div>
 
@@ -120,6 +122,7 @@
             <p class="text-gray-600 mb-6 text-center">
               Lihat perbandingan semua operator dari yang paling unggul sampai yang masih perlu ditingkatkan
             </p>
+
             <div class="h-[250px]">
               <canvas id="chartRanking"></canvas>
             </div>

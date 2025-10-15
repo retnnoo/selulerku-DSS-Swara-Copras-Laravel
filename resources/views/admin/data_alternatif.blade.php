@@ -25,8 +25,10 @@
       <!-- Main -->
       <main class="max-w-[1200px] mx-auto px-4 lg:px-8 py-6 space-y-6">
         <h1 class="text-3xl font-bold text-(--warna1)">Daftar Alternatif</h1>
-        <p class="text-slate-500 mb-5">
-          Daftar Alternatif keputusan.
+        <p class="text-slate-500 mb-10">
+          Operator berikut merupakan alternatif dalam proses pengambilan keputusan di setiap wilayah.
+          Setiap alternatif dinilai berdasarkan sejumlah kriteria, yang mencerminkan performa operator 
+          pada masing-masing faktor penilaian.
         </p>
 
             <!-- Bagian Pilih Wilayah -->
@@ -41,14 +43,6 @@
                 </select>
                     </form>
             </div>
-
-          @if (session()->has('success'))
-                        <div class="alert alert-success alert-dismissible fade show mt-4" role="alert">
-                            {{ session('success') }}
-                            <button type="button" class="close" data-bs-dismiss="alert"
-                                aria-label="Close"><span>&times;</span></button>
-                        </div>
-                    @endif
 
         <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-lg">
           <div class="flex justify-between items-center mb-4">
@@ -76,6 +70,7 @@
               </thead>
               <tbody>
                @foreach ($alternatif as $a)
+           @if ($a->nilaiAlternatif->isNotEmpty())
                  <tr>
                     <td class="text-center font-medium">{{ $a->kode_alternatif }}</td>
                     <td class="text-center font-medium">{{ $a->nama_alternatif }}</td>
@@ -103,6 +98,7 @@
                       </form>
                     </td>
                   </tr>
+                   @endif
                @endforeach
                   
               </tbody>
@@ -113,9 +109,9 @@
     </div>
   </div>
 
-<div id="modalTambah" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50 overflow-y-auto">
+<div id="modalTambah" class="hidden fixed inset-0 bg-black/50 items-center justify-center z-50 overflow-y-auto">
   <div class="bg-white rounded-lg p-6 w-full max-w-md my-10 max-h-[90vh] overflow-y-auto">
-    <h3 class="text-xl font-bold text-blue-600 mb-4">Tambah Alternatif</h3>
+    <h3 class="text-xl font-bold text-(--warna1) mb-4">Tambah Alternatif</h3>
     <form action="{{ route('store.alternatif') }}" method="POST">
       @csrf
 
@@ -142,7 +138,7 @@
   </div>
 </div>
 
-<div id="modalEdit" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50 overflow-y-auto">
+<div id="modalEdit" class="hidden fixed inset-0 bg-black/50 items-center justify-center z-50 overflow-y-auto">
   <div class="bg-white rounded-lg p-6 w-full max-w-md my-10 max-h-[90vh] overflow-y-auto">
     <h3 class="text-xl font-bold text-yellow-600 mb-4">Edit Alternatif</h3>
     <form method="POST">
@@ -258,15 +254,15 @@
 
   function openModal(id) {
     const modal = document.getElementById(id);
-    modal.classList.add("flex");
     modal.classList.remove("hidden");
+    modal.classList.add("flex");
     document.body.classList.add('overflow-hidden');
   }
 
   function openModalEdit(kodeAlternatif, nilaiData, namaAlternatif) {
     const modal = document.getElementById('modalEdit');
-    modal.classList.remove("hidden");
     modal.classList.add("flex");
+    modal.classList.remove("hidden");
     document.body.classList.add('overflow-hidden');
 
     modal.querySelectorAll('.input-edit').forEach(input => {

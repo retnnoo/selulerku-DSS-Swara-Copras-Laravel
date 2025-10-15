@@ -23,8 +23,10 @@
       <!-- Main -->
       <main class="max-w-[1200px] mx-auto px-4 lg:px-8 py-6 space-y-6">
         <h1 class="text-3xl font-bold text-(--warna1)">Daftar Ahli</h1>
-        <p class="text-slate-500 mb-5">
-          Daftar kriteria yang digunakan untuk pengambilan keputusan.
+        <p class="text-slate-500 mb-10">
+          Berikut ini adalah daftar ahli atau pakar yang berperan dalam menilai kriteria pada sistem pengambilan keputusan.
+          Setiap ahli memberikan penilaian berdasarkan pengetahuan dan pengalamannya, sehingga sistem dapat 
+          menentukan bobot kriteria dengan tepat dan mendukung pengambilan keputusan yang lebih akurat.
         </p>
 
         <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-lg">
@@ -89,32 +91,21 @@
   </div>
 
 <!-- Modal Tambah -->
-<div id="modalTambah" class="fixed inset-0 z-50 bg-black/50 flex items-center justify-center overflow-hidden">
+<div id="modalTambah" class="hidden fixed inset-0 z-50 bg-black/50 items-center justify-center overflow-hidden">
   <div class="bg-white rounded-lg shadow-lg w-full max-w-md max-h-[90vh] overflow-y-auto p-6">
     <h3 class="text-xl font-bold text-(--warna1) mb-4">Tambah Nilai Ahli</h3>
     <form action="{{ route('store.ahli') }}" method="POST">
       @csrf
       @foreach ($kriteria as $k)
         <label class="font-semibold block mb-1">{{ $k->nama_kriteria }}</label>
-        <input 
-          type="text" 
-          placeholder="Nilai {{ $k->nama_kriteria }}" 
-          name="nilai[{{ $k->kode_kriteria }}]" 
-          class="w-full border border-gray-300 px-3 py-2 rounded mb-3 focus:ring-2 focus:ring-blue-400 focus:outline-none"
-        >    
+        <input type="text" placeholder="Nilai {{ $k->nama_kriteria }}" name="nilai[{{ $k->kode_kriteria }}]" 
+          class="w-full border border-gray-300 px-3 py-2 rounded mb-3 focus:ring-2 focus:ring-blue-400 focus:outline-none">    
       @endforeach
       <div class="flex justify-end gap-2 mt-4">
-        <button 
-          type="button" 
-          onclick="closeModal('modalTambah')" 
-          class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300 transition"
-        >
+        <button type="button" onclick="closeModal('modalTambah')" class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300 transition">
           Batal
         </button>
-        <button 
-          type="submit" 
-          class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition"
-        >
+        <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition">
           Simpan
         </button>
       </div>
@@ -123,33 +114,21 @@
 </div>
 
 <!-- Modal Edit -->
-<div id="modalEdit" class="fixed inset-0 z-50 bg-black/50 flex items-center justify-center overflow-hidden">
+<div id="modalEdit" class="hidden fixed inset-0 z-50 bg-black/50 items-center justify-center overflow-hidden">
   <div class="bg-white rounded-lg shadow-lg w-full max-w-md max-h-[90vh] overflow-y-auto p-6">
     <h3 class="text-xl font-bold text-yellow-500 mb-4">Edit Kriteria</h3>
     <form method="POST">
       @csrf
       @foreach ($kriteria as $k)
         <label class="font-semibold block mb-1">{{ $k->nama_kriteria }}</label>
-        <input 
-          type="text" 
-          placeholder="Nilai {{ $k->nama_kriteria }}" 
-          name="nilai[{{ $k->kode_kriteria }}]" 
-          value="" 
-          class="w-full border border-gray-300 px-3 py-2 rounded mb-3 focus:ring-2 focus:ring-yellow-400 focus:outline-none"
-        >    
+        <input type="text" placeholder="Nilai {{ $k->nama_kriteria }}" name="nilai[{{ $k->kode_kriteria }}]" value="" 
+          class="w-full border border-gray-300 px-3 py-2 rounded mb-3 focus:ring-2 focus:ring-yellow-400 focus:outline-none">    
       @endforeach
       <div class="flex justify-end gap-2 mt-4">
-        <button 
-          type="button" 
-          onclick="closeModal('modalEdit')" 
-          class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300 transition"
-        >
+        <button type="button" onclick="closeModal('modalEdit')" class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300 transition">
           Batal
         </button>
-        <button 
-          type="submit" 
-          class="px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600 transition"
-        >
+        <button type="submit" class="px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600 transition">
           Update
         </button>
       </div>
@@ -188,7 +167,7 @@
         searching: true,
         ordering: true,
         info: true,
-        lengthMenu: [5, 10, 20],
+        lengthMenu: [10, 20, 30],
         language: {
           lengthMenu: "Tampilkan _MENU_ entri",
           search: "Cari:",
@@ -232,17 +211,16 @@
 
    function openModal(id) {
     const modal = document.getElementById(id);
-    modal.classList.add("flex");
     modal.classList.remove("hidden");
+    modal.classList.add("flex");
     document.body.classList.add('overflow-hidden');
   }
-
 
   function openModalEdit(kodeAhli, nilaiData) {
     const modal = document.getElementById('modalEdit');
     modal.classList.remove('hidden');
-     modal.classList.add('flex');
-     document.body.classList.add('overflow-hidden');
+    modal.classList.add('flex');
+    document.body.classList.add('overflow-hidden');
 
     for (const kodeKriteria in nilaiData) {
         const input = modal.querySelector(`input[name="nilai[${kodeKriteria}]"]`);
@@ -254,11 +232,10 @@
 
   }
 
-
   function closeModal(id) {
     const modal = document.getElementById(id);
-    modal.classList.add("hidden");
     modal.classList.remove("flex");
+    modal.classList.add("hidden");
     document.body.classList.remove('overflow-hidden');
   }
 

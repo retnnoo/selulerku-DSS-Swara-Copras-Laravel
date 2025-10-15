@@ -21,9 +21,11 @@
 
       <!-- Main -->
       <main class="max-w-[1200px] mx-auto px-4 lg:px-8 py-6 space-y-6">
-        <h1 class="text-3xl font-bold text-(--warna1)">Daftar Rangking Alternatif</h1>
-        <p class="text-slate-500 mb-5">
-          Daftar rangking alternatif dari setiap wilayah menggunakan metode copras.
+        <h1 class="text-3xl font-bold text-(--warna1)">Hasil Rangking Alternatif</h1>
+        <p class="text-slate-500 mb-10">
+          Berikut merupakan hasil perangkingan alternatif atau operator untuk setiap wilayah dengan metode COPRAS. 
+          Metode COPRAS digunakan untuk mengevaluasi dan membandingkan setiap alternatif secara menyeluruh, 
+          sehingga sistem dapat menentukan alternatif terbaik dengan mempertimbangkan semua kriteria secara proporsional.
         </p>
 
         <!-- Bagian Pilih Wilayah -->
@@ -41,14 +43,6 @@
               </form>
           </div>
 
-          @if (session()->has('success'))
-                        <div class="alert alert-success alert-dismissible fade show mt-4" role="alert">
-                            {{ session('success') }}
-                            <button type="button" class="close" data-bs-dismiss="alert"
-                                aria-label="Close"><span>&times;</span></button>
-                        </div>
-                    @endif
-
         <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-lg">
           <div class="flex justify-between items-center mb-4">
             <h2 class="text-2xl font-semibold text-(--warna1)">Tabel Rangking</h2>
@@ -65,13 +59,13 @@
                 </tr>
               </thead>
               <tbody>
-                  @foreach ($copras as $row)
-                      <tr>
-                          <td class="text-center">{{ $row->kode_alternatif }}</td>
-                          <td class="text-center">{{ $row->alternatif->nama_alternatif ?? '-' }}</td>
-                          <td class="text-center">{{ number_format($row->nilai_copras, 2) }}</td>
-                      </tr>
-                  @endforeach
+                @foreach ($copras as $row)
+                  <tr>
+                    <td class="text-center">{{ $row->kode_alternatif }}</td>
+                    <td class="text-center">{{ $row->alternatif->nama_alternatif ?? '-' }}</td>
+                    <td class="text-center">{{ number_format($row->nilai_copras, 2) }}</td>
+                  </tr>
+                @endforeach
               </tbody>
             </table>
           </div>
@@ -85,7 +79,6 @@
   <!-- DataTables JS -->
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
-
 
 <script>
     $(document).ready(function() {
