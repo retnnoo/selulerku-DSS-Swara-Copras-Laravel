@@ -7,7 +7,8 @@
   <!--icon-->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
-  @vite('resources/css/app.css')
+  <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    @vite('resources/css/app.css')
 </head>
 
 <body class="bg-slate-50 text-slate-900">
@@ -119,13 +120,11 @@
   </div>
 
 <!-- Loading Overlay -->
-<div id="loadingOverlay" class="hidden fixed inset-0 bg-black/60 z-[9999] flex justify-center items-center">
-  <div class="flex items-center">
-    <div class="w-16 h-16 border-4 border-white border-t-blue-500 rounded-full animate-spin"></div>
-    <p class="text-white text-lg font-semibold ml-4">Loading...</p>
-  </div>
+<div id="loadingOverlay"
+     class="invisible opacity-0 fixed inset-0 bg-black/60 z-50 flex justify-center items-center transition-opacity duration-300 pointer-events-none">
+  <div class="w-16 h-16 border-4 border-white border-t-blue-500 rounded-full animate-spin"></div>
+  <p class="text-white text-lg font-semibold ml-4">Loading...</p>
 </div>
-
 
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -148,7 +147,7 @@
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="{{ asset('js/script.js') }}"></script>
+<script src="{{ asset('/js/script.js') }}"></script>
 
 
 <script>
@@ -223,6 +222,21 @@
     modal.classList.add("hidden");
     modal.classList.remove("flex");
   }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    const overlay = document.getElementById('loadingOverlay');
+
+    // Tangkap semua form
+    const semuaForm = document.querySelectorAll('form');
+
+    semuaForm.forEach(form => {
+      form.addEventListener('submit', function(e) {
+        // Tampilkan overlay
+        overlay.classList.remove('invisible', 'opacity-0');
+        overlay.classList.add('pointer-events-auto');
+      });
+    });
+  });
 
 </script>
 </body>

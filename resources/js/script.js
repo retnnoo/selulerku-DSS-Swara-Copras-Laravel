@@ -1,23 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const overlay = document.getElementById("loadingOverlay");
-
-    // Pastikan overlay disembunyikan saat awal halaman dimuat
-    if (overlay) {
-        overlay.classList.add("hidden");
-        overlay.classList.remove("flex");
-    }
-
-    // Tampilkan overlay saat form disubmit
-    document.querySelectorAll("form").forEach((form) => {
-        form.addEventListener("submit", () => {
-            if (overlay) {
-                overlay.classList.remove("hidden");
-                overlay.classList.add("flex");
-            }
-        });
-    });
-
-    // Flash message (opsional)
+    // Flash message
     if (window.flashSuccess) {
         Swal.fire({
             icon: "success",
@@ -38,8 +20,11 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
-// Konfirmasi hapus (juga tampilkan loading kalau lanjut hapus)
 function konfirmasiHapus(formId) {
+    const overlay = document.getElementById("loadingOverlay");
+    const form = document.getElementById(formId);
+    if (!form) return;
+
     Swal.fire({
         title: "Yakin ingin menghapus?",
         text: "Data akan dihapus permanen!",
@@ -49,33 +34,15 @@ function konfirmasiHapus(formId) {
         cancelButtonColor: "#3085d6",
         confirmButtonText: "Ya, hapus!",
         cancelButtonText: "Batal",
+        allowOutsideClick: false,
     }).then((result) => {
         if (result.isConfirmed) {
-            const form = document.getElementById(formId);
-            const overlay = document.getElementById("loadingOverlay");
-
+            // Tampilkan overlay
             if (overlay) {
-                overlay.classList.remove("hidden");
-                overlay.classList.add("flex");
+                overlay.classList.remove("invisible", "opacity-0");
+                overlay.style.pointerEvents = "none"; // biar form.submit tetap jalan
             }
-
-            if (form) form.submit();
+            form.submit();
         }
     });
 }
-
-document.addEventListener("DOMContentLoaded", function () {
-    const overlay = document.getElementById("loadingOverlay");
-
-    // Pastikan overlay disembunyikan saat awal halaman
-    overlay.classList.add("hidden");
-    overlay.classList.remove("flex");
-
-    // Saat form disubmit, tampilkan overlay
-    document.querySelectorAll("form").forEach((form) => {
-        form.addEventListener("submit", (e) => {
-            overlay.classList.remove("hidden");
-            overlay.classList.add("flex");
-        });
-    });
-});
