@@ -1,10 +1,9 @@
 <!-- Sidebar -->
     <aside id="sidebar" 
-      class="w-64 hidden lg:flex lg:flex-col fixed inset-y-0 top-0 z-50 h-screen 
-            bg-gradient-to-b from-blue-200 to-(--warna1) text-white shadow-lg">
+          class="w-64 fixed inset-y-0 top-0 z-50 bg-gradient-to-b from-blue-200 to-(--warna1) text-white shadow-lg hidden lg:flex flex-col">
 
       <!-- Logo -->
-      <div class="m-5 py-5 border-b border-blue-200">
+      <div class="m-5 py-5 border-b border-blue-200 flex-shrink-0">
         <img src="{{ asset('img/logo.png') }}" alt="Logo Image" class="h-12">
       </div>
 
@@ -21,7 +20,7 @@
       </nav>
 
       <!-- Logout -->
-      <div class="p-4 border-t border-(--warna1)">
+      <div class="p-4 border-t border-(--warna1) flex-shrink-0">
         <form action="{{ route('logout') }}" method="POST">
           @csrf
           <button type="submit"
