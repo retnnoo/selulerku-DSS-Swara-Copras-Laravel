@@ -4,7 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Dashboard Admin</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     @vite('resources/css/app.css')
 </head>
@@ -23,28 +24,28 @@
         <!-- Stat Cards -->
         <section class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <div class="bg-gradient-to-r from-blue-100 to-blue-300 rounded-lg p-5 border border-slate-200 shadow">
-            <span class="text-sm text-slate-700">Jumlah Kriteria</span>
+            <span class="text-lg font-bold text-slate-700"><i class="fa-solid fa-list mr-2"></i>Jumlah Kriteria</span>
             <div class="mt-2 text-3xl font-bold text-slate-800" id="countKriteria">
               {{ $countKriteria }}
             </div>
           </div>
 
           <div class="bg-gradient-to-r from-orange-100 to-orange-300 rounded-lg p-5 border border-slate-200 shadow">
-            <span class="text-sm text-slate-700">Jumlah Alternatif</span>
+            <span class="text-lg font-bold text-slate-700"><i class="fa-solid fa-tower-cell mr-2"></i> Alternatif</span>
             <div class="mt-2 text-3xl font-bold text-slate-800" id="countAlternatif">
               {{ $countAlternatif }}
             </div>
           </div>
 
           <div class="bg-gradient-to-r from-red-100 to-red-300 rounded-lg p-5 border border-slate-200 shadow">
-            <span class="text-sm text-slate-700">Jumlah Wilayah</span>
+            <span class="text-lg font-bold text-slate-700"><i class="fa-solid fa-location-dot mr-2"></i> Wilayah</span>
             <div class="mt-2 text-3xl font-bold text-slate-800">
               {{ $countWilayah }}
             </div>
           </div>
 
           <div class="bg-gradient-to-r from-pink-100 to-pink-300 rounded-lg p-5 border border-slate-200 shadow">
-            <span class="text-sm text-slate-700">Jumlah Admin</span>
+            <span class="text-lg font-bold text-slate-700"><i class="fa-solid fa-user mr-2"></i>Jumlah Admin</span>
             <div class="mt-2 text-3xl font-bold text-slate-800" id="countAdmin">
               {{ $countAdmin }}
             </div>
