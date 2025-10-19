@@ -8,56 +8,61 @@
 </head>
 <body class="min-h-screen flex items-center justify-center bg-gray-50">
 
-    <div class="flex flex-col lg:flex-row bg-white shadow-xl rounded-2xl overflow-hidden max-w-5xl w-full">
+    <div class="flex flex-col lg:flex-row bg-white shadow-xl rounded-2xl overflow-hidden max-w-5xl w-full mx-4 lg:mx-auto">
     
-        <div class="w-full lg:w-1/2 bg-gradient-to-br from-blue-300 via-blue-500 to-(--warna1) flex items-center justify-center p-6 mb-6 lg:mb-0">
-            <img src="{{ asset('img/login.png') }}" alt="Ilustrasi Login" class="w-3/4 sm:w-1/2 md:w-2/5 lg:w-10/12 h-auto">
+        <!-- Bagian Gambar -->
+        <div class="w-full lg:w-1/2 flex items-center justify-center p-6 mb-6 lg:mb-0"
+            style="background: linear-gradient(to bottom right, #3b82f6, #2563eb, var(--warna1));">
+            <img src="{{ asset('img/login.png') }}" alt="Ilustrasi Login"
+                class="w-3/4 sm:w-2/3 md:w-1/2 lg:w-10/12 h-auto">
         </div>
 
-
-        <div class="w-full lg:w-1/2 p-10">
-            <div class="flex justify-center mb-8">
-                <h1 class="text-3xl md:text-5xl font-bold text-(--warna1)">SelulerKu</h1>
+        <!-- Bagian Form -->
+        <div class="w-full lg:w-1/2 p-8 md:p-10 flex flex-col justify-center">
+            <div class="flex justify-center mb-6 md:mb-8">
+                <h1 class="text-3xl md:text-5xl font-bold" style="color: var(--warna1)">SelulerKu</h1>
             </div>
 
             <h2 class="text-2xl font-extrabold text-gray-800 mb-2">Selamat Datang</h2>
             <p class="text-gray-500 mb-6">Silahkan Login Untuk Melanjutkan!</p>
-                 @if (session()->has('error'))
-                        <div class="text-red-600 text-center -mt-3 mb-3" role="">
-                            {{ session('error') }}
-                        </div>
-                    @endif
+
+            @if (session()->has('error'))
+                <div class="text-red-600 text-center -mt-3 mb-3">
+                    {{ session('error') }}
+                </div>
+            @endif
+
             <form action="{{ route('login.post') }}" method="POST" class="space-y-5">
                 @csrf
                 <div>
                     <label class="block text-sm font-medium text-gray-700">Username</label>
-                        <input type="" name="name" placeholder="Masukkan username"
-                            class="mt-1 w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-(--warna1) focus:outline-none" required>
-                        @error('name')
-                            <div class="invalid-feedback" style="display: block">
-                                {{ $message }}
-                            </div>
-                        @enderror
+                    <input type="text" name="name" placeholder="Masukkan username"
+                        class="mt-1 w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:outline-none"
+                        style="focus:ring-color: var(--warna1);" required>
+                    @error('name')
+                        <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                    @enderror
                 </div>
 
                 <div>
                     <label class="block text-sm font-medium text-gray-700">Password</label>
-                        <input type="password" name="password" placeholder="Masukkan Password"
-                            class="mt-1 w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-(--warna1) focus:outline-none" required>
-                         @error('password')
-                            <div class="invalid-feedback" style="display: block">
-                                {{ $message }}
-                            </div>
-                        @enderror
+                    <input type="password" name="password" placeholder="Masukkan Password"
+                        class="mt-1 w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:outline-none"
+                        style="focus:ring-color: var(--warna1);" required>
+                    @error('password')
+                        <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                    @enderror
                 </div>
 
                 <button type="submit"
-                    class="w-full py-3 rounded-lg bg-(--warna1) text-white font-semibold hover:bg-blue-500 transition">
+                        class="w-full py-3 rounded-lg text-white font-semibold hover:opacity-90 transition"
+                        style="background-color: var(--warna1)">
                     Login
                 </button>
             </form>
         </div>
     </div>
+
 
 <x-loading></x-loading>
 
