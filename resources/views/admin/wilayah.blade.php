@@ -219,19 +219,19 @@
   }
 
     document.addEventListener('DOMContentLoaded', function() {
-    const overlay = document.getElementById('loadingOverlay');
+      const overlay = document.getElementById('loadingOverlay');
 
-    // Tangkap semua form
-    const semuaForm = document.querySelectorAll('form');
+      // Tangkap semua form
+      const semuaForm = document.querySelectorAll('form');
 
-    semuaForm.forEach(form => {
-      form.addEventListener('submit', function(e) {
-        // Tampilkan overlay
-        overlay.classList.remove('invisible', 'opacity-0');
-        overlay.classList.add('pointer-events-auto');
+      semuaForm.forEach(form => {
+        form.addEventListener('submit', function(e) {
+          // Tampilkan overlay
+          overlay.classList.remove('invisible', 'opacity-0');
+          overlay.classList.add('pointer-events-auto');
+        });
       });
     });
-  });
 
   document.addEventListener('DOMContentLoaded', function() {
     const overlay = document.getElementById('loadingOverlay');

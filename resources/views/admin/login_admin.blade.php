@@ -58,5 +58,22 @@
         </div>
     </div>
 
+<x-loading></x-loading>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const overlay = document.getElementById('loadingOverlay');
+
+        document.querySelectorAll('form').forEach(form => {
+            form.addEventListener('submit', function() {
+                if(overlay) {
+                    overlay.classList.remove('invisible','opacity-0');
+                    overlay.style.pointerEvents = 'none'; // supaya submit tetap jalan
+                }
+            });
+        });
+    });
+</script>
+
 </body>
 </html>

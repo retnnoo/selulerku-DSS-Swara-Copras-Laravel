@@ -8,7 +8,6 @@
     <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
     <!--icon-->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
-
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
      @vite('resources/css/app.css')
     <title>Beranda Utama</title>
@@ -134,6 +133,7 @@
     </div>
 </section>
 
+<x-loading></x-loading>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -193,8 +193,20 @@
             renderWilayah(this.value);
         });
     });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const overlay = document.getElementById('loadingOverlay');
+
+        document.querySelectorAll('form').forEach(form => {
+            form.addEventListener('submit', function() {
+                if (overlay) {
+                    overlay.classList.remove('invisible','opacity-0');
+                    overlay.style.pointerEvents = 'none'; // biar submit tetap jalan
+                }
+            });
+        });
+    });
+
   </script>
-
-
 </body>
 </html>

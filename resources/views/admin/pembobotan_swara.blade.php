@@ -59,6 +59,8 @@
     </div>
   </div>
 
+  <x-loading></x-loading>
+
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -113,6 +115,21 @@
     if (link.getAttribute("href") === currentPath) {
       link.classList.add("bg-blue-100", "text-blue-500");
     }
+  });
+
+  document.addEventListener('DOMContentLoaded', function() {
+    const overlay = document.getElementById('loadingOverlay');
+
+      // Tangkap semua form
+    const semuaForm = document.querySelectorAll('form');
+
+    semuaForm.forEach(form => {
+      form.addEventListener('submit', function(e) {
+          // Tampilkan overlay
+        overlay.classList.remove('invisible', 'opacity-0');
+        overlay.classList.add('pointer-events-auto');
+      });
+    });
   });
 </script>
 </body>
