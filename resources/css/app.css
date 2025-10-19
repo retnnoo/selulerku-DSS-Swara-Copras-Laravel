@@ -12,6 +12,10 @@
     --warna1: #185598;
 }
 
+body {
+    font-family: "Ubuntu", system-ui;
+}
+
 .select2-container .select2-selection {
     height: 3rem;
     padding: 0.4rem 1rem;
