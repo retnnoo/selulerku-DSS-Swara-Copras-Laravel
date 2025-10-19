@@ -103,3 +103,12 @@ table.dataTable td {
     padding: 6px 10px;
     outline: none;
 }
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+.spinner {
+    animation: spin 0.9s linear infinite;
+}
