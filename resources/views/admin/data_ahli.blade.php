@@ -75,7 +75,7 @@
                               @csrf
                               @method('DELETE')
                               <button type="button" onclick="konfirmasiHapus('delete-form-{{ $a->kode_ahli }}')" 
-                                  class="px-3 py-1 text-xs font-medium bg-red-100 text-red-600 rounded-lg hover:bg-red-200 transition">
+                                  class="btn-hapus px-3 py-1 text-xs font-medium bg-red-100 text-red-600 rounded-lg hover:bg-red-200 transition">
                                   <i class="fa-solid fa-trash text-xl"></i>
                               </button>
                           </form>
@@ -135,6 +135,8 @@
     </form>
   </div>
 </div>
+
+<x-loading></x-loading>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -238,6 +240,34 @@
     modal.classList.add("hidden");
     document.body.classList.remove('overflow-hidden');
   }
+
+    document.addEventListener('DOMContentLoaded', function() {
+    const overlay = document.getElementById('loadingOverlay');
+
+    // Tangkap semua form
+    const semuaForm = document.querySelectorAll('form');
+
+    semuaForm.forEach(form => {
+      form.addEventListener('submit', function(e) {
+        // Tampilkan overlay
+        overlay.classList.remove('invisible', 'opacity-0');
+        overlay.classList.add('pointer-events-auto');
+      });
+    });
+  });
+
+  document.addEventListener('DOMContentLoaded', function() {
+    const overlay = document.getElementById('loadingOverlay');
+    const tombolHapus = document.querySelectorAll('.btn-hapus');
+
+    tombolHapus.forEach(btn => {
+      btn.addEventListener('click', function() {
+        // Tampilkan overlay
+        overlay.classList.remove('invisible', 'opacity-0');
+        overlay.classList.add('pointer-events-auto');
+      });
+    });
+  });
 
 </script>
 </body>

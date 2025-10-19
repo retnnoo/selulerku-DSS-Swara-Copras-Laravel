@@ -67,7 +67,7 @@
                         @csrf
                         @method('DELETE')
                         <button type="button" onclick="konfirmasiHapus('delete-form-{{ $row->id }}')"
-                        class="px-3 py-1 text-xs font-medium bg-red-100 text-red-600 rounded-lg hover:bg-red-200 transition">
+                        class="btn-hapus px-3 py-1 text-xs font-medium bg-red-100 text-red-600 rounded-lg hover:bg-red-200 transition">
                         <i class="fa-solid fa-trash text-xl"></i>
                           <span class="hidden md:inline font-bold ml-2 text-base">Hapus</span>
                         </button>
@@ -120,11 +120,7 @@
   </div>
 
 <!-- Loading Overlay -->
-<div id="loadingOverlay"
-     class="invisible opacity-0 fixed inset-0 bg-black/60 z-50 flex justify-center items-center transition-opacity duration-300 pointer-events-none">
-  <div class="w-16 h-16 border-4 border-white border-t-blue-500 rounded-full animate-spin"></div>
-  <p class="text-white text-lg font-semibold ml-4">Loading...</p>
-</div>
+<x-loading></x-loading>
 
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -231,6 +227,19 @@
 
     semuaForm.forEach(form => {
       form.addEventListener('submit', function(e) {
+        // Tampilkan overlay
+        overlay.classList.remove('invisible', 'opacity-0');
+        overlay.classList.add('pointer-events-auto');
+      });
+    });
+  });
+
+  document.addEventListener('DOMContentLoaded', function() {
+    const overlay = document.getElementById('loadingOverlay');
+    const tombolHapus = document.querySelectorAll('.btn-hapus');
+
+    tombolHapus.forEach(btn => {
+      btn.addEventListener('click', function() {
         // Tampilkan overlay
         overlay.classList.remove('invisible', 'opacity-0');
         overlay.classList.add('pointer-events-auto');

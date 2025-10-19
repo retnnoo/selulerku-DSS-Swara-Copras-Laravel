@@ -32,7 +32,7 @@
             <div class="max-w-md flex-col justify-start">
               <p class="text-gray-500 text-base md:text-lg font-medium mb-4">Pilih wilayah</p>
               <form action="{{ route('copras') }}" method="GET" id="formWilayah">
-                  <select id="wilayah" name="wilayah" onchange="document.getElementById('formWilayah').submit()"
+                  <select id="wilayah" name="wilayah"
                       class="select2 w-full rounded-lg border border-gray-300 p-3 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
                       @foreach ($wilayah as $items)
                           <option value="{{ $items->kode_wilayah }}" {{ request('wilayah') == $items->kode_wilayah ? 'selected' : '' }}>
@@ -74,6 +74,9 @@
     </div>
   </div>
 
+<!-- Loading Overlay -->
+<x-loading></x-loading>
+
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <!-- DataTables JS -->
@@ -81,13 +84,6 @@
 <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
 
 <script>
-    $(document).ready(function() {
-        $('#wilayah').select2({
-            placeholder: "Pilih Wilayah",
-            width: '100%',
-        });     
-    });
-
     $(document).ready(function () {
       $('#kriteriaTable').DataTable({
         paging: true,
@@ -135,6 +131,29 @@
       link.classList.add("bg-blue-100", "text-blue-500");
     }
   });
+
+  document.addEventListener('DOMContentLoaded', function() {
+      const overlay = document.getElementById('loadingOverlay');
+      const formWilayah = document.getElementById('formWilayah');
+
+      // Inisialisasi Select2
+      $('#wilayah').select2({
+          placeholder: "Pilih Wilayah",
+          width: '100%',
+      });
+
+      // Event khusus Select2
+      $('#wilayah').on('change.select2', function() {
+          if (overlay) {
+              overlay.classList.remove('invisible','opacity-0');
+              overlay.style.pointerEvents = 'none'; // biar submit tetap jalan
+          }
+          formWilayah.submit();
+      });
+  });
+
+
+
 
 </script>
 </body>

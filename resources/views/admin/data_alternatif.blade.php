@@ -35,7 +35,7 @@
             <div class="max-w-md flex-col justify-start">
                 <p class="text-gray-500 text-base md:text-lg font-medium mb-4">Pilih wilayah</p>
                 <form action="{{ route('alternatif') }}" method="GET" id="formWilayah">
-                <select id="wilayah" name="wilayah"  onchange="document.getElementById('formWilayah').submit()"
+                <select id="wilayah" name="wilayah"
                     class="select2 w-full rounded-lg border border-gray-300 p-3 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
                     @foreach ($wilayah as $items )
                        <option value="{{$items->kode_wilayah}}"  {{ request('wilayah') == $items->kode_wilayah ? 'selected' : '' }}>{{$items->nama_wilayah}}</option>
@@ -92,7 +92,7 @@
                         @method('DELETE')
                         @csrf
                         <button type="button" onclick="konfirmasiHapus('delete-form-{{ $a->kode_alternatif }}')"
-                          class="px-3 py-1 text-xs font-medium bg-red-100 text-red-600 rounded-lg hover:bg-red-200 transition">
+                          class="btn-hapus px-3 py-1 text-xs font-medium bg-red-100 text-red-600 rounded-lg hover:bg-red-200 transition">
                           <i class="fa-solid fa-trash text-xl"></i>
                         </button>
                       </form>
@@ -171,6 +171,9 @@
   </div>
 </div>
 
+<!-- Loading Overlay -->
+<x-loading></x-loading>
+
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -197,12 +200,26 @@
 
 
 <script>
-    $(document).ready(function() {
+    document.addEventListener('DOMContentLoaded', function() {
+        const overlay = document.getElementById('loadingOverlay');
+        const formWilayah = document.getElementById('formWilayah');
+
+        // Inisialisasi Select2
         $('#wilayah').select2({
             placeholder: "Pilih Wilayah",
             width: '100%',
-        });     
+        });
+
+        // Event khusus Select2
+        $('#wilayah').on('change.select2', function() {
+            if (overlay) {
+                overlay.classList.remove('invisible','opacity-0');
+                overlay.style.pointerEvents = 'none'; // biar submit tetap jalan
+            }
+            formWilayah.submit();
+        });
     });
+
     
     $(document).ready(function () {
       $('#kriteriaTable').DataTable({
@@ -290,6 +307,34 @@
     modal.classList.remove("flex");
     document.body.classList.remove('overflow-hidden');
   }
+
+    document.addEventListener('DOMContentLoaded', function() {
+    const overlay = document.getElementById('loadingOverlay');
+
+    // Tangkap semua form
+    const semuaForm = document.querySelectorAll('form');
+
+    semuaForm.forEach(form => {
+      form.addEventListener('submit', function(e) {
+        // Tampilkan overlay
+        overlay.classList.remove('invisible', 'opacity-0');
+        overlay.classList.add('pointer-events-auto');
+      });
+    });
+  });
+
+  document.addEventListener('DOMContentLoaded', function() {
+    const overlay = document.getElementById('loadingOverlay');
+    const tombolHapus = document.querySelectorAll('.btn-hapus');
+
+    tombolHapus.forEach(btn => {
+      btn.addEventListener('click', function() {
+        // Tampilkan overlay
+        overlay.classList.remove('invisible', 'opacity-0');
+        overlay.classList.add('pointer-events-auto');
+      });
+    });
+  });
 
 </script>
 </body>
