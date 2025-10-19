@@ -10,9 +10,10 @@
 
     <div class="flex flex-col lg:flex-row bg-white shadow-xl rounded-2xl overflow-hidden max-w-5xl w-full">
     
-        <div class="hidden lg:flex w-1/2 bg-gradient-to-br from-blue-300 via-blue-500 to-(--warna1) items-center justify-center p-6">
-            <img src="{{ asset('img/login.png') }}" alt="Ilustrasi Login" class="w-10/5 h-auto">
+        <div class="w-full lg:w-1/2 bg-gradient-to-br from-blue-300 via-blue-500 to-(--warna1) flex items-center justify-center p-6 mb-6 lg:mb-0">
+            <img src="{{ asset('img/login.png') }}" alt="Ilustrasi Login" class="w-3/4 sm:w-1/2 md:w-2/5 lg:w-10/12 h-auto">
         </div>
+
 
         <div class="w-full lg:w-1/2 p-10">
             <div class="flex justify-center mb-8">
