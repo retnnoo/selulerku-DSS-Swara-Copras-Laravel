@@ -28,10 +28,7 @@ class UserController extends Controller{
             $rankingPerWilayah[$wil->nama_wilayah] = $ranking;
         }
 
-    
-
         $defaultWilayah = $wilayahList->first()->nama_wilayah ?? 'Gang Buntu';
-        Log::info('wilayah : ' . $defaultWilayah);
         $defaultRanking = $rankingPerWilayah[$defaultWilayah] ?? collect();
         $best = $defaultRanking->first();
 

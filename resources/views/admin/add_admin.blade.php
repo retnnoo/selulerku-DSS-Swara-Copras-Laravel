@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Tambah Pengguna</title>
+  <title>Daftar Admin</title>
   <!--icon-->
   <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
@@ -25,7 +25,7 @@
       <main class="max-w-[1200px] mx-auto px-4 lg:px-8 py-6 space-y-6">
         <h1 class="text-3xl font-bold text-(--warna1)">Daftar Admin</h1>
         <p class="text-slate-500 mb-10">Daftar Admin menampilkan seluruh akun administrator yang memiliki 
-          akses untuk mengelola sistem. Setiap admin memiliki hak dan tanggung jawab unruk mengelola siste,
+          akses untuk mengelola sistem. Setiap admin memiliki hak dan tanggung jawab untuk mengelola sistem,
           serta memantau proses pengambilan keputusan.
         </p>
 

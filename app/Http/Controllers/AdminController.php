@@ -570,7 +570,7 @@ class AdminController extends Controller{
     }
 
 
-    public function dashboard() {
+    /* public function dashboard() {
         $countKriteria   = Kriteria::count();
         $countAlternatif = Alternatif::count();
         $countAdmin      = User::count();
@@ -601,7 +601,7 @@ class AdminController extends Controller{
         View::share('countAlternatif', Alternatif::count());
         View::share('countAdmin', User::count());
         View::share('countWilayah', Wilayah::count());
-    }
+    } */
     
 
 }
