@@ -74,7 +74,7 @@
 <script>
   const rankingData = @json($rankingPerWilayah);
     Object.keys(rankingData).forEach(wilayah => {
-        const ctx = document.getElementById(wilayah.replace(/\s+/g, '').toLowerCase());
+        const ctx = document.getElementById(wilayah.replace(/[^a-zA-Z0-9]/g, '').toLowerCase());
         if (ctx) {
             new Chart(ctx, {
                 type: 'bar',
