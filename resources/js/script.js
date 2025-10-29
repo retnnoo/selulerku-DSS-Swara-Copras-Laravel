@@ -21,7 +21,6 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function konfirmasiHapus(formId) {
-    const overlay = document.getElementById("loadingOverlay");
     const form = document.getElementById(formId);
     if (!form) return;
 
@@ -37,12 +36,29 @@ function konfirmasiHapus(formId) {
         allowOutsideClick: false,
     }).then((result) => {
         if (result.isConfirmed) {
-            // Tampilkan overlay
-            if (overlay) {
-                overlay.classList.remove("invisible", "opacity-0");
-                overlay.style.pointerEvents = "none"; // biar form.submit tetap jalan
-            }
             form.submit();
         }
     });
 }
+
+// function konfirmasiHapus(formId) {
+//     console.log("formId:", formId);
+
+//     Swal.fire({
+//         title: "Yakin ingin menghapus?",
+//         text: "Data akan dihapus permanen!",
+//         icon: "warning",
+//         showCancelButton: true,
+//         confirmButtonColor: "#d33",
+//         cancelButtonColor: "#3085d6",
+//         confirmButtonText: "Ya, hapus!",
+//         cancelButtonText: "Batal",
+//     }).then((result) => {
+//         console.log("result:", result);
+//         if (result.isConfirmed) {
+//             const form = document.getElementById(formId);
+//             console.log("form:", form);
+//             if (form) form.submit();
+//         }
+//     });
+// }

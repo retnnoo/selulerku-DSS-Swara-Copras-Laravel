@@ -257,18 +257,29 @@
     });
   });
 
-  document.addEventListener('DOMContentLoaded', function() {
-    const overlay = document.getElementById('loadingOverlay');
-    const tombolHapus = document.querySelectorAll('.btn-hapus');
+  function konfirmasiHapus(formId) {
+      const overlay = document.getElementById('loadingOverlay');
 
-    tombolHapus.forEach(btn => {
-      btn.addEventListener('click', function() {
-        // Tampilkan overlay
-        overlay.classList.remove('invisible', 'opacity-0');
-        overlay.classList.add('pointer-events-auto');
+      Swal.fire({
+          title: "Yakin ingin menghapus?",
+          text: "Data akan dihapus permanen!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#d33",
+          cancelButtonColor: "#3085d6",
+          confirmButtonText: "Ya, hapus!",
+          cancelButtonText: "Batal",
+      }).then((result) => {
+          if (result.isConfirmed) {
+              if (overlay) {
+                  overlay.classList.remove('invisible', 'opacity-0');
+                  overlay.classList.add('pointer-events-auto');
+              }
+              const form = document.getElementById(formId);
+              if (form) form.submit();
+          }
       });
-    });
-  });
+  }
 
 </script>
 </body>
