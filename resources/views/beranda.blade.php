@@ -137,6 +137,12 @@
     </div>
 </section>
 
+<footer class="bg-(--warna1) text-white py-4 text-center">
+  <p class="text-sm">
+    SelulerKu<span class="text-white">&copy; 2025</span> Universitas Sriwijaya.
+  </p>
+</footer>
+
 <x-loading></x-loading>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
