@@ -84,56 +84,9 @@
   <!-- DataTables JS -->
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+<script src="{{ asset('/js/script.js') }}"></script>
 
 <script>
-    $(document).ready(function () {
-      $('#kriteriaTable').DataTable({
-        paging: true,
-        searching: true,
-        ordering: true,
-        info: true,
-        lengthMenu: [10, 20],
-        language: {
-          lengthMenu: "Tampilkan _MENU_ entri",
-          search: "Cari:",
-          info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ entri",
-          paginate: {
-            previous: "«",
-            next: "»"
-          }
-        }
-      });
-    });
-  
-  // --- Sidebar Toggle ---
-  const sidebar = document.getElementById('sidebar');
-  const overlay = document.getElementById('overlay');
-  const sidebarBtn = document.getElementById('sidebarBtn');
-
-  function openSidebar() {
-    sidebar.classList.remove('hidden');
-    sidebar.classList.add('flex','flex-col');
-    overlay.classList.remove('hidden');
-  }
-
-  function closeSidebar() {
-    sidebar.classList.add('hidden');
-    sidebar.classList.remove('flex','flex-col');
-    overlay.classList.add('hidden');
-  }
-
-  sidebarBtn?.addEventListener('click', openSidebar);
-  overlay?.addEventListener('click', closeSidebar);
-
-  const links = document.querySelectorAll("nav a");
-  const currentPath = window.location.pathname;
-
-  links.forEach(link => {
-    if (link.getAttribute("href") === currentPath) {
-      link.classList.add("bg-blue-100", "text-blue-500");
-    }
-  });
-
   document.addEventListener('DOMContentLoaded', function() {
       const overlay = document.getElementById('loadingOverlay');
       const formWilayah = document.getElementById('formWilayah');
@@ -153,10 +106,6 @@
           formWilayah.submit();
       });
   });
-
-
-
-
 </script>
 </body>
 </html>

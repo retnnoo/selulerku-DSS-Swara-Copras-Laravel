@@ -99,7 +99,7 @@
       @csrf
       @foreach ($kriteria as $k)
         <label class="font-semibold block mb-1">{{ $k->nama_kriteria }}</label>
-        <input type="text" placeholder="Nilai {{ $k->nama_kriteria }}" name="nilai[{{ $k->kode_kriteria }}]" 
+        <input type="number" placeholder="Nilai {{ $k->nama_kriteria }}" name="nilai[{{ $k->kode_kriteria }}]" 
           class="w-full border border-gray-300 px-3 py-2 rounded mb-3 focus:ring-2 focus:ring-blue-400 focus:outline-none">    
       @endforeach
       <div class="flex justify-end gap-2 mt-4">
@@ -122,7 +122,7 @@
       @csrf
       @foreach ($kriteria as $k)
         <label class="font-semibold block mb-1">{{ $k->nama_kriteria }}</label>
-        <input type="text" placeholder="Nilai {{ $k->nama_kriteria }}" name="nilai[{{ $k->kode_kriteria }}]" value="" 
+        <input type="number" placeholder="Nilai {{ $k->nama_kriteria }}" name="nilai[{{ $k->kode_kriteria }}]" value="" 
           class="w-full border border-gray-300 px-3 py-2 rounded mb-3 focus:ring-2 focus:ring-yellow-400 focus:outline-none">    
       @endforeach
       <div class="flex justify-end gap-2 mt-4">
@@ -162,63 +162,7 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="{{ asset('/js/script.js') }}"></script>
 
-
 <script>
-    $(document).ready(function () {
-      $('#kriteriaTable').DataTable({
-        paging: true,
-        searching: true,
-        ordering: true,
-        info: true,
-        lengthMenu: [10, 20, 30],
-        language: {
-          lengthMenu: "Tampilkan _MENU_ entri",
-          search: "Cari:",
-          info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ entri",
-          paginate: {
-            previous: "«",
-            next: "»"
-          }
-        }
-      });
-    });
-  
-  // --- Sidebar Toggle ---
-  const sidebar = document.getElementById('sidebar');
-  const overlay = document.getElementById('overlay');
-  const sidebarBtn = document.getElementById('sidebarBtn');
-
-  function openSidebar() {
-    sidebar.classList.remove('hidden');
-    sidebar.classList.add('flex','flex-col');
-    overlay.classList.remove('hidden');
-  }
-
-  function closeSidebar() {
-    sidebar.classList.add('hidden');
-    sidebar.classList.remove('flex','flex-col');
-    overlay.classList.add('hidden');
-  }
-
-  sidebarBtn?.addEventListener('click', openSidebar);
-  overlay?.addEventListener('click', closeSidebar);
-
-  const links = document.querySelectorAll("nav a");
-  const currentPath = window.location.pathname;
-
-  links.forEach(link => {
-    if (link.getAttribute("href") === currentPath) {
-      link.classList.add("bg-blue-100", "text-blue-500");
-    }
-  });
-
-   function openModal(id) {
-    const modal = document.getElementById(id);
-    modal.classList.remove("hidden");
-    modal.classList.add("flex");
-    document.body.classList.add('overflow-hidden');
-  }
-
   function openModalEdit(kodeAhli, nilaiData) {
     const modal = document.getElementById('modalEdit');
     modal.classList.remove('hidden');
@@ -232,53 +176,6 @@
         }
     }
     document.querySelector('#modalEdit form').action = "{{ url('/dashboard-admin/ahli/update-data') }}/" + kodeAhli;
-
-  }
-
-  function closeModal(id) {
-    const modal = document.getElementById(id);
-    modal.classList.remove("flex");
-    modal.classList.add("hidden");
-    document.body.classList.remove('overflow-hidden');
-  }
-
-    document.addEventListener('DOMContentLoaded', function() {
-    const overlay = document.getElementById('loadingOverlay');
-
-    // Tangkap semua form
-    const semuaForm = document.querySelectorAll('form');
-
-    semuaForm.forEach(form => {
-      form.addEventListener('submit', function(e) {
-        // Tampilkan overlay
-        overlay.classList.remove('invisible', 'opacity-0');
-        overlay.classList.add('pointer-events-auto');
-      });
-    });
-  });
-
-  function konfirmasiHapus(formId) {
-      const overlay = document.getElementById('loadingOverlay');
-
-      Swal.fire({
-          title: "Yakin ingin menghapus?",
-          text: "Data akan dihapus permanen!",
-          icon: "warning",
-          showCancelButton: true,
-          confirmButtonColor: "#d33",
-          cancelButtonColor: "#3085d6",
-          confirmButtonText: "Ya, hapus!",
-          cancelButtonText: "Batal",
-      }).then((result) => {
-          if (result.isConfirmed) {
-              if (overlay) {
-                  overlay.classList.remove('invisible', 'opacity-0');
-                  overlay.classList.add('pointer-events-auto');
-              }
-              const form = document.getElementById(formId);
-              if (form) form.submit();
-          }
-      });
   }
 
 </script>

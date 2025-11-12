@@ -71,6 +71,8 @@
   </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{{ asset('/js/script.js') }}"></script>
+
 <script>
   const rankingData = @json($rankingPerWilayah);
     Object.keys(rankingData).forEach(wilayah => {
@@ -97,30 +99,6 @@
             });
         }
     });
-
-
-  // --- Sidebar Toggle ---
-  const sidebar = document.getElementById('sidebar');
-  const overlay = document.getElementById('overlay');
-  const sidebarBtn = document.getElementById('sidebarBtn');
-
-  function openSidebar() {
-    sidebar.classList.remove('hidden');
-    sidebar.classList.add('flex','flex-col');
-    overlay.classList.remove('hidden');
-  }
-
-  function closeSidebar() {
-    sidebar.classList.add('hidden');
-    sidebar.classList.remove('flex','flex-col');
-    overlay.classList.add('hidden');
-  }
-
-  sidebarBtn?.addEventListener('click', openSidebar);
-  overlay?.addEventListener('click', closeSidebar);
-
-  const links = document.querySelectorAll("nav a");
-  const currentPath = window.location.pathname;
 
 </script>
 </body>
