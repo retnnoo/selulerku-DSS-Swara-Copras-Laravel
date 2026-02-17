@@ -25,9 +25,9 @@
       <main class="max-w-[1200px] mx-auto px-4 lg:px-8 py-6 space-y-6">
         <h1 class="text-3xl font-bold text-(--warna1)">Daftar Ahli</h1>
         <p class="text-slate-500 mb-10">
-          Berikut ini adalah daftar ahli atau pakar yang berperan dalam menilai kriteria pada sistem pengambilan keputusan.
-          Setiap ahli memberikan penilaian berdasarkan pengetahuan dan pengalamannya, sehingga sistem dapat 
-          menentukan bobot kriteria dengan tepat dan mendukung pengambilan keputusan yang lebih akurat.
+          Berikut merupakan daftar ahli atau pengambil keputusan yang berperan dalam proses penilaian kriteria pada sistem pengambilan keputusan. 
+          Pengambil keputusan merupakan pengguna operator seluler dari setiap wilayah yang memberikan penilaian berdasarkan pengalaman dan pengetahuan mereka. 
+          Hasil penilaian tersebut digunakan sebagai dasar dalam menentukan bobot kriteria agar sistem dapat menghasilkan keputusan yang lebih akurat.
         </p>
 
         <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-lg">

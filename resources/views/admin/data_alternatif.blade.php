@@ -27,9 +27,8 @@
       <main class="max-w-[1200px] mx-auto px-4 lg:px-8 py-6 space-y-6">
         <h1 class="text-3xl font-bold text-(--warna1)">Daftar Alternatif</h1>
         <p class="text-slate-500 mb-10">
-          Operator berikut merupakan alternatif dalam proses pengambilan keputusan di setiap wilayah.
-          Setiap alternatif dinilai berdasarkan sejumlah kriteria, yang mencerminkan performa operator 
-          pada masing-masing faktor penilaian.
+          Berikut merupakan daftar operator seluler yang menjadi alternatif dalam proses pengambilan keputusan. 
+          Setiap alternatif akan dievaluasi berdasarkan kriteria yang telah ditetapkan untuk mencerminkan performa nyata operator di wilayah.
         </p>
 
             <!-- Bagian Pilih Wilayah -->
@@ -120,7 +119,7 @@
 
       @foreach ($kriteria as $k)
         <label class="font-semibold">{{ $k->nama_kriteria }}</label>
-        <input type="number" placeholder="Nilai {{ $k->nama_kriteria }}" name="nilai[{{ $k->kode_kriteria }}]" class="w-full border px-3 py-2 rounded mb-3">
+        <input type="number" step="any" placeholder="Nilai {{ $k->nama_kriteria }}" name="nilai[{{ $k->kode_kriteria }}]" class="w-full border px-3 py-2 rounded mb-3">
       @endforeach
 
       <input type="hidden" name="kode_wilayah" value="{{ request('wilayah') }}">
@@ -150,7 +149,7 @@
 
       @foreach ($kriteria as $k)
         <label class="font-semibold">{{ $k->nama_kriteria }}</label>
-        <input type="number" placeholder="Nilai {{ $k->nama_kriteria }}"
+        <input type="number" step="any" placeholder="Nilai {{ $k->nama_kriteria }}"
                name="nilai[{{ $k->kode_kriteria }}]" value=""
                class="w-full border px-3 py-2 rounded mb-3 input-edit">
       @endforeach

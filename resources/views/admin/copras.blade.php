@@ -25,9 +25,9 @@
       <main class="max-w-[1200px] mx-auto px-4 lg:px-8 py-6 space-y-6">
         <h1 class="text-3xl font-bold text-(--warna1)">Hasil Rangking Alternatif</h1>
         <p class="text-slate-500 mb-10">
-          Berikut merupakan hasil perangkingan alternatif atau operator untuk setiap wilayah dengan metode COPRAS. 
-          Metode COPRAS digunakan untuk mengevaluasi dan membandingkan setiap alternatif secara menyeluruh, 
-          sehingga sistem dapat menentukan alternatif terbaik dengan mempertimbangkan semua kriteria secara proporsional.
+          Berikut merupakan hasil perangkingan alternatif atau operator pada setiap wilayah menggunakan metode COPRAS. 
+          Metode ini digunakan untuk mengevaluasi dan membandingkan seluruh alternatif berdasarkan bobot dan kriteria yang telah ditentukan, 
+          sehingga sistem dapat menentukan operator terbaik secara proporsional dan objektif.
         </p>
 
         <!-- Bagian Pilih Wilayah -->

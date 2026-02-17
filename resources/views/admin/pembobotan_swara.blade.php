@@ -24,10 +24,10 @@
       <main class="max-w-[1200px] mx-auto px-4 lg:px-8 py-6 space-y-6">
         <h1 class="text-3xl font-bold text-(--warna1)">Hasil Pembobotan SWARA</h1>
         <p class="text-slate-500 mb-10">
-          Berikut ini adalah hasil pembobotan kriteria menggunakan metode SWARA.
-          Metode ini menentukan bobot kepentingan setiap kriteria berdasarkan penilaian ahli, 
-          sehingga setiap kriteria memberikan kontribusi yang proporsional dalam proses pengambilan 
-          keputusan.
+          Berikut ini adalah hasil pembobotan kriteria menggunakan metode SWARA. 
+          Bobot setiap kriteria ditentukan berdasarkan penilaian ahli atau pengambil keputusan, 
+          sehingga tingkat kepentingan masing-masing kriteria dapat dihitung secara sistematis dan digunakan sebagai 
+          dasar dalam proses pengambilan keputusan.
         </p>
 
         <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-lg">

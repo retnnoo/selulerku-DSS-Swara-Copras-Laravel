@@ -24,9 +24,10 @@
       <!-- Main -->
       <main class="max-w-[1200px] mx-auto px-4 lg:px-8 py-6 space-y-6">
         <h1 class="text-3xl font-bold text-(--warna1)">Daftar Admin</h1>
-        <p class="text-slate-500 mb-10">Daftar Admin menampilkan seluruh akun administrator yang memiliki 
-          akses untuk mengelola sistem. Setiap admin memiliki hak dan tanggung jawab untuk mengelola sistem,
-          serta memantau proses pengambilan keputusan.
+        <p class="text-slate-500 mb-10">
+          Daftar Admin menampilkan seluruh akun administrator yang memiliki akses untuk mengelola sistem. 
+          Setiap admin bertanggung jawab dalam mengelola data kriteria, alternatif, wilayah, serta nilai penilaian 
+          yang digunakan dalam proses perhitungan, dan memantau hasil pengambilan keputusan.
         </p>
 
         <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-lg">

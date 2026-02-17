@@ -38,12 +38,13 @@
           Temukan Operator Seluler Terbaik Untukmu
         </h1>
         <p class="text-gray-600">
-          SelulerKu bantu kamu nemuin operator terbaik di wilayah Timbangan Indralaya Utara. 
-          Mulai dari kecepatan sinyal, stabilitas sinyal, cakupan sinyal, harga paket, bonus, masa aktif, sampai layanan 
-          operator semuanya dibandingin biar kamu dapet rekomendasi yang paling pas buat kebutuhan kamu. 
-          Sistem ini merupakan sistem pendukung keputusan yang pakai metode SWARA buat nentuin seberapa penting tiap kriteria, 
-          terus COPRAS buat nge-rangking operator, jadi rekomendasinya lebih akurat dan sesuai sama kebutuhanmu. Data yang digunakan 
-          dalam sistem ini juga bisa diupdate secara otomatis oleh admin pengelola sistemnya.
+          Bingung pilih operator seluler di wilayah Timbangan? SelulerKu hadir memberikan rekomendasi yang paling pas untuk Anda. 
+          Sistem kami menganalisis berbagai kriteria secara mendalam, mulai dari kecepatan, stabilitas, dan cakupan sinyal, hingga harga paket, 
+          bonus, masa aktif, serta kualitas layanan operator menggunakan metode ilmiah yang akurat.
+        </p>
+        <p class="text-gray-600">
+          Hasilnya, Anda akan mendapatkan daftar peringkat operator terbaik yang sesuai dengan kebutuhan. 
+          Data yang digunakan saat ini berbasis data tahun 2025 dan dapat diperbarui secara berkala untuk memastikan hasil yang valid dan relevan.
         </p>
 
         <div class="grid grid-cols-3 md:grid-cols-6 gap-3 pt-4 mb-10">
@@ -112,10 +113,9 @@
             <img id="operator-logo" src="./img/default.png" alt="Operator" class="h-16 mb-4">
             <h3 id="operator-nama" class="text-3xl font-extrabold">-</h3>
             <p class="mt-4 text-gray-600 text-base max-w-xl mx-auto">
-              <span id="operator-nama2"></span> direkomendasikan karena memperoleh skor COPRAS tertinggi di wilayah ini,
-              yang dihitung berdasarkan pertimbangan seluruh nilai kriteria yang meliputi kecepatan sinyal, stabilitas sinyal, 
-              cakupan sinyal, harga paket, bonus, masa aktif, sampai layanan 
-              operator dari data tahun 2025.
+              <span id="operator-nama2"></span> direkomendasikan karena memiliki performa paling optimal dibandingkan operator lain.
+              Hasil ini diperoleh melalui analisis menyeluruh terhadap seluruh kriteria dengan menggunakan data tahun 2025,
+              sehingga memberikan gambaran performa yang paling akurat sesuai karakteristik wilayah ini.
             </p>
           </div>
 
