@@ -109,17 +109,17 @@
   </div>
 
 <div id="modalTambah" class="hidden fixed inset-0 bg-black/50 items-center justify-center z-50 overflow-y-auto">
-  <div class="bg-white rounded-lg p-6 w-full max-w-md my-10 max-h-[90vh] overflow-y-auto">
-    <h3 class="text-xl font-bold text-(--warna1) mb-4">Tambah Alternatif</h3>
+  <div class="bg-white rounded-lg p-6 w-full max-w-lg my-10 max-h-[90vh] overflow-y-auto">
+    <h3 class="text-xl font-bold text-(--warna1) mb-4">Tambah Data Alternatif</h3>
     <form action="{{ route('store.alternatif') }}" method="POST">
       @csrf
 
       <label class="font-semibold">Nama Alternatif</label>
-      <input type="text" placeholder="Nama Alternatif" name="nama_alternatif" class="w-full border px-3 py-2 rounded mb-3">
+      <input type="text" placeholder="Input Nama Alternatif" name="nama_alternatif" class="w-full border px-3 py-2 rounded mb-3">
 
       @foreach ($kriteria as $k)
         <label class="font-semibold">{{ $k->nama_kriteria }}</label>
-        <input type="number" step="any" placeholder="Nilai {{ $k->nama_kriteria }}" name="nilai[{{ $k->kode_kriteria }}]" class="w-full border px-3 py-2 rounded mb-3">
+        <input type="number" step="any" placeholder="Input Nilai {{ $k->nama_kriteria }}" name="nilai[{{ $k->kode_kriteria }}]" class="w-full border px-3 py-2 rounded mb-3">
       @endforeach
 
       <input type="hidden" name="kode_wilayah" value="{{ request('wilayah') }}">
@@ -138,18 +138,18 @@
 </div>
 
 <div id="modalEdit" class="hidden fixed inset-0 bg-black/50 items-center justify-center z-50 overflow-y-auto">
-  <div class="bg-white rounded-lg p-6 w-full max-w-md my-10 max-h-[90vh] overflow-y-auto">
-    <h3 class="text-xl font-bold text-yellow-600 mb-4">Edit Alternatif</h3>
+  <div class="bg-white rounded-lg p-6 w-full max-w-lg my-10 max-h-[90vh] overflow-y-auto">
+    <h3 class="text-xl font-bold text-yellow-600 mb-4">Edit Data Alternatif</h3>
     <form method="POST">
       @csrf
 
       <label class="font-semibold">Nama Alternatif</label>
-      <input type="text" name="nama_alternatif" id="inputNamaAlternatif"
+      <input type="text" placeholder="Input Nama Alternatif" name="nama_alternatif" id="inputNamaAlternatif"
              class="w-full border px-3 py-2 rounded mb-3 input-edit">
 
       @foreach ($kriteria as $k)
         <label class="font-semibold">{{ $k->nama_kriteria }}</label>
-        <input type="number" step="any" placeholder="Nilai {{ $k->nama_kriteria }}"
+        <input type="number" step="any" placeholder="Input Nilai {{ $k->nama_kriteria }}"
                name="nilai[{{ $k->kode_kriteria }}]" value=""
                class="w-full border px-3 py-2 rounded mb-3 input-edit">
       @endforeach

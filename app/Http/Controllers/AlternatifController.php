@@ -38,11 +38,9 @@ class AlternatifController extends Controller
         ]);
 
         try {
-            $namaLower = strtolower($data['nama_alternatif']);
-
+            $namaLower = strtolower($data['nama_alternatif']); #cek apakah alterantif sudah ada, beasr kecilnya huruf dianggap sama
             $existingAlternatif = Alternatif::whereRaw('LOWER(nama_alternatif) = ?', [$namaLower])->first();
     
-            
             if($existingAlternatif){
                 $newKode = $existingAlternatif->kode_alternatif; 
             }
@@ -62,7 +60,7 @@ class AlternatifController extends Controller
                                                         ->first()
                                                         ->kode_wilayah;
 
-            // Simpan nilai kriteria
+            // looping untuk Simpan nilai kriteria
             foreach ($data['nilai'] as $kode_kriteria => $val) {
                 DB::table('nilai_alternatif')->insert([
                     'kode_alternatif' => $newKode,
@@ -108,10 +106,14 @@ class AlternatifController extends Controller
                 );
             }
 
-            return redirect()->route('alternatif')->with('success', 'Data berhasil diperbarui!');
+            return redirect()
+                ->route('alternatif', ['wilayah' => $data['kode_wilayah']])
+                ->with('success', 'Data berhasil diperbarui!');
         } catch (\Exception $e) {
-            return redirect()->route('alternatif')->with('error', 'Gagal memperbarui data alternatif!');
-        }
+            return redirect()
+                ->route('alternatif', ['wilayah' => $data['kode_wilayah']])
+                ->with('error', 'Gagal memperbarui data alternatif!');
+            }
     }
 
     public function deleteAlternatif($kode_alternatif){

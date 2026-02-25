@@ -16,4 +16,9 @@ class Bobot extends Model
         'bobot_kriteria',
     ];
     public $timestamps = false;
+
+    public function kriteria(){
+        return $this->belongsTo(Kriteria::class, 'kode_kriteria', 'kode_kriteria');
+    }
 }
+

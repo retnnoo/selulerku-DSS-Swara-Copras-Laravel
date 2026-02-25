@@ -78,7 +78,7 @@ $(document).ready(function () {
     $("#kriteriaTable").DataTable({
         paging: true,
         searching: true,
-        ordering: true,
+        ordering: false,
         info: true,
         lengthMenu: [10, 20],
         language: {

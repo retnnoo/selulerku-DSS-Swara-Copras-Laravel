@@ -22,38 +22,32 @@ class CoprasController extends Controller
         $bobot        = Bobot::pluck('bobot_kriteria', 'kode_kriteria')->toArray();
         $jenis        = Kriteria::pluck('jenis_kriteria', 'kode_kriteria')->toArray();
 
-        $normalisasi = [];
-        $terbobot    = [];
-        $Si          = [];
-
+        $hasilProses = [];
         foreach ($wilayah as $w) {
-            $Si[$w] = []; // reset per wilayah
-
             $data = NilaiAlternatif::where('kode_wilayah', $w)->get();
             if ($data->isEmpty()) continue;
 
-            // === 1. Hitung jumlah tiap kriteria (untuk normalisasi) ===
+            // Hitung jumlah tiap kriteria (untuk normalisasi)
             $sum = [];
             foreach ($kodeKriteria as $kriteria) {
                 $sum[$kriteria] = $data->where('kode_kriteria', $kriteria)->sum('nilai');
             }
 
-            // === 2. Normalisasi & terbobot ===
             foreach ($data as $row) {
-                $kode      = $row->kode_kriteria;
+                $kode = $row->kode_kriteria;
                 $nilaiNorm = $sum[$kode] ? $row->nilai / $sum[$kode] : 0;
-
-                $normalisasi[$w][$row->kode_alternatif][$kode] = $nilaiNorm;
+                $nilaiNorm = round($nilaiNorm, 5);
+                $normalisasi[$row->kode_alternatif][$kode] = $nilaiNorm;
 
                 $nilaiTerbobot = $nilaiNorm * ($bobot[$kode] ?? 0);
-                $terbobot[$w][$row->kode_alternatif][$kode] = $nilaiTerbobot;
+                $nilaiTerbobot = round($nilaiTerbobot, 5);
+                $terbobot[$row->kode_alternatif][$kode] = $nilaiTerbobot;
             }
 
-            // === 3. Hitung Si+ (benefit) dan Si- (cost) ===
-            foreach ($terbobot[$w] as $alt => $kriteriaValues) {
+            // Hitung Si+ dan Si-
+            foreach ($terbobot as $alt => $kriteriaValues) {
                 $SiPlus = 0;
                 $SiMin  = 0;
-
                 foreach ($kriteriaValues as $k => $val) {
                     if (($jenis[$k] ?? 'benefit') === 'benefit') {
                         $SiPlus += $val;
@@ -61,19 +55,17 @@ class CoprasController extends Controller
                         $SiMin += $val;
                     }
                 }
-
-                $Si[$w][$alt] = [
-                    'Si+' => $SiPlus,
-                    'Si-' => $SiMin
+                $Si[$alt] = [
+                    'Si+' => round($SiPlus, 5),
+                    'Si-' => round($SiMin, 5)
                 ];
             }
 
-            // === 4. Hitung variabel pendukung (ΣSi- dan Σ(1/Si-)) ===
-            $sumSiMin   = array_sum(array_column($Si[$w], 'Si-')); 
-            $sumInverse = array_sum(array_map(fn($x) => $x['Si-'] > 0 ? 1/$x['Si-'] : 0, $Si[$w])); 
+            // Hitung Qi
+            $sumSiMin   = array_sum(array_column($Si, 'Si-')); 
+            $sumInverse = array_sum(array_map(fn($x) => $x['Si-'] > 0 ? 1/$x['Si-'] : 0, $Si)); 
 
-            // === 5. Hitung Qi ===
-            foreach ($Si[$w] as $alt => $val) {
+            foreach ($Si as $alt => $val) {
                 if ($val['Si-'] > 0) {
                     $pembagi  = $val['Si-'] * $sumInverse;
                     $costPart = $sumSiMin / $pembagi;
@@ -81,25 +73,30 @@ class CoprasController extends Controller
                 } else {
                     $Qi = $val['Si+'];
                 }
-
-                $Si[$w][$alt]['Qi'] = round($Qi, 9);
+                $Si[$alt]['Qi'] = round($Qi, 5);
             }
 
-            // === 6. Hitung Ui (normalisasi ke 0–100) ===
-            $maxQi = max(array_column($Si[$w], 'Qi'));
-            foreach ($Si[$w] as $alt => $val) {
+            // Hitung Ui
+            $maxQi = max(array_column($Si, 'Qi'));
+            foreach ($Si as $alt => $val) {
                 $Ui = $maxQi > 0 ? ($val['Qi'] / $maxQi) * 100 : 0;
-                $Ui = round($Ui, 6);
+                $Ui = round($Ui, 5);
+                $Si[$alt]['Ui'] = $Ui;
 
-                Copras::where('kode_wilayah', $w)
-                    ->where('kode_alternatif', $alt)
-                    ->update([
-                        'nilai_copras' => $Ui
-                    ]);
+                // Simpan Ui akhir ke database
+                Copras::updateOrCreate(
+                    ['kode_wilayah' => $w, 'kode_alternatif' => $alt],
+                    ['nilai_copras' => $Ui]
+                );
             }
+
+            $hasilProses[$w] = [
+                'normalisasi' => $normalisasi,
+                'terbobot'    => $terbobot,
+                'Si'          => $Si
+            ];
         }
 
-        // === Ambil data untuk ditampilkan ke view ===
         $wilayah = Wilayah::all();
         $defaultWilayah = Wilayah::first()->kode_wilayah ?? null;
 
@@ -112,6 +109,6 @@ class CoprasController extends Controller
             ->orderByDesc('nilai_copras')
             ->get();
 
-        return view('admin.copras', compact('wilayah', 'copras'));
+        return view('admin.copras', compact('wilayah', 'copras', 'hasilProses'));
     }
 }

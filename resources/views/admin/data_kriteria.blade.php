@@ -119,7 +119,7 @@
 <!-- Modal Edit -->
 <div id="modalEdit" class="hidden fixed inset-0 bg-black/50 items-center justify-center z-50">
   <div class="bg-white rounded-lg p-6 w-full max-w-md">
-    <h3 class="text-xl font-bold text-(--warna1) mb-4">Edit Kriteria</h3>
+    <h3 class="text-xl font-bold text-yellow-500 mb-4">Edit Kriteria</h3>
     <form method="POST">
       @csrf
       <label class="font-semibold">Nama Kriteria</label>

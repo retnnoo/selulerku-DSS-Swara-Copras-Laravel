@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 class AhliController extends Controller
 {
     public function indexAhli(){
-        $ahli =  Ahli::orderByRaw('CAST(SUBSTRING(kode_ahli, 2) AS UNSIGNED) ASC')->get();
+        $ahli =  Ahli::orderByRaw('CAST(SUBSTRING(kode_ahli, 2) AS UNSIGNED) ASC')->get(); #ubah string jadi angka supaya diurutkan numerik
         $kriteria = Kriteria::all();
 
         return view('admin.data_ahli', compact('ahli', 'kriteria'));
@@ -27,14 +27,14 @@ class AhliController extends Controller
 
         try {
             // Buat kode baru
-            $last = Ahli::orderByRaw('CAST(SUBSTRING(kode_ahli, 2) AS UNSIGNED) DESC')->first();
-            $newKode = $last ? 'P' . ((int) substr($last->kode_ahli, 1) + 1) : 'P1';
+            $last = Ahli::orderByRaw('CAST(SUBSTRING(kode_ahli, 2) AS UNSIGNED) DESC')->first(); #ambil ahli terakhir berdasarkan angka dari kode_ahli
+            $newKode = $last ? 'P' . ((int) substr($last->kode_ahli, 1) + 1) : 'P1'; #buat kode baru dengan menambahkan 1 ke angka terakhir
 
             $ahli = Ahli::create([
                 'kode_ahli' => $newKode,
             ]);
 
-            // Simpan nilai
+            // Looping untuk Simpan nilai ahli setiap kriteria
             foreach ($request->nilai as $kode_kriteria => $val) {
                 DB::table('nilai_ahli')->insert([
                     'kode_ahli' => $ahli->kode_ahli,

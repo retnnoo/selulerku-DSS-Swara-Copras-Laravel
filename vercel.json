@@ -36,10 +36,10 @@
         "SESSION_DRIVER": "cookie",
 
         "DB_CONNECTION": "mysql",
-        "DB_PORT": "61002",
-        "DB_HOST": "9uz2da.h.filess.io",
-        "DB_DATABASE": "SelulerKu_distanceif",
-        "DB_USERNAME": "SelulerKu_distanceif",
+        "DB_PORT": "3307",
+        "DB_HOST": "c6qz7g.h.filess.io",
+        "DB_DATABASE": "SelulerKu_generalour",
+        "DB_USERNAME": "SelulerKu_generalour",
         "MYSQL_ATTR_SSL_CA": "/etc/pki/tls/certs/ca-bundle.crt"
     }
 }

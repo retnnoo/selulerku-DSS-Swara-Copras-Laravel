@@ -25,9 +25,8 @@
       <main class="max-w-[1200px] mx-auto px-4 lg:px-8 py-6 space-y-6">
         <h1 class="text-3xl font-bold text-(--warna1)">Daftar Ahli</h1>
         <p class="text-slate-500 mb-10">
-          Berikut merupakan daftar ahli atau pengambil keputusan yang berperan dalam proses penilaian kriteria pada sistem pengambilan keputusan. 
-          Pengambil keputusan merupakan pengguna operator seluler dari setiap wilayah yang memberikan penilaian berdasarkan pengalaman dan pengetahuan mereka. 
-          Hasil penilaian tersebut digunakan sebagai dasar dalam menentukan bobot kriteria agar sistem dapat menghasilkan keputusan yang lebih akurat.
+          Berikut merupakan daftar ahli atau pengambil keputusan yang berperan dalam proses penilaian kepentingan kriteria pada sistem pengambilan keputusan. 
+          Pengambil keputusan merupakan pengguna operator seluler dari setiap wilayah yang memberikan penilaian berdasarkan pengalaman dan pengetahuan mereka.
         </p>
 
         <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-lg">
@@ -93,13 +92,13 @@
 
 <!-- Modal Tambah -->
 <div id="modalTambah" class="hidden fixed inset-0 z-50 bg-black/50 items-center justify-center overflow-hidden">
-  <div class="bg-white rounded-lg shadow-lg w-full max-w-md max-h-[90vh] overflow-y-auto p-6">
-    <h3 class="text-xl font-bold text-(--warna1) mb-4">Tambah Nilai Ahli</h3>
+  <div class="bg-white rounded-lg shadow-lg w-full max-w-lg max-h-[90vh] overflow-y-auto p-6">
+    <h3 class="text-xl font-bold text-(--warna1) mb-4">Tambah Nilai Kepentingan Kriteria</h3>
     <form action="{{ route('store.ahli') }}" method="POST">
       @csrf
       @foreach ($kriteria as $k)
         <label class="font-semibold block mb-1">{{ $k->nama_kriteria }}</label>
-        <input type="number" placeholder="Nilai {{ $k->nama_kriteria }}" name="nilai[{{ $k->kode_kriteria }}]" 
+        <input type="number" placeholder="Input nilai {{ $k->nama_kriteria }} dari 1-10" name="nilai[{{ $k->kode_kriteria }}]" 
           class="w-full border border-gray-300 px-3 py-2 rounded mb-3 focus:ring-2 focus:ring-blue-400 focus:outline-none">    
       @endforeach
       <div class="flex justify-end gap-2 mt-4">
@@ -116,13 +115,13 @@
 
 <!-- Modal Edit -->
 <div id="modalEdit" class="hidden fixed inset-0 z-50 bg-black/50 items-center justify-center overflow-hidden">
-  <div class="bg-white rounded-lg shadow-lg w-full max-w-md max-h-[90vh] overflow-y-auto p-6">
-    <h3 class="text-xl font-bold text-yellow-500 mb-4">Edit Kriteria</h3>
+  <div class="bg-white rounded-lg shadow-lg w-full max-w-lg max-h-[90vh] overflow-y-auto p-6">
+    <h3 class="text-xl font-bold text-yellow-500 mb-4">Edit Nilai Kepentingan Kriteria</h3>
     <form method="POST">
       @csrf
       @foreach ($kriteria as $k)
         <label class="font-semibold block mb-1">{{ $k->nama_kriteria }}</label>
-        <input type="number" placeholder="Nilai {{ $k->nama_kriteria }}" name="nilai[{{ $k->kode_kriteria }}]" value="" 
+        <input type="number" placeholder="Input Nilai {{ $k->nama_kriteria }} dari 1-10" name="nilai[{{ $k->kode_kriteria }}]" value="" 
           class="w-full border border-gray-300 px-3 py-2 rounded mb-3 focus:ring-2 focus:ring-yellow-400 focus:outline-none">    
       @endforeach
       <div class="flex justify-end gap-2 mt-4">
